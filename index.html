@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yilong — Robotics Simulation Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Literata:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:      #f9fafb;
+  --bg2:     #ffffff;
+  --bg3:     #f3f4f6;
+  --border:  #e5e7eb;
+  --border2: #d1d5db;
+  --text:    #111827;
+  --sub:     #374151;
+  --meta:    #6b7280;
+  --accent:  #b45309;
+  --accent-h:#92400e;
+  --mono:    'IBM Plex Mono', monospace;
+  --display: 'Syne', sans-serif;
+  --body:    'Literata', Georgia, serif;
+}
+
+html { scroll-behavior: smooth; }
+body { background: #f7f2e8; color: var(--text); font-family: var(--body); font-size: 1rem; font-weight: 400; line-height: 1.75; overflow-x: hidden; }
+
+/* NAV */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 300; display: flex; align-items: center; justify-content: space-between; padding: 1rem 3rem; background: rgba(34,26,14,0.92); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border-bottom: 1px solid rgba(232,201,128,0.08); }
+.nav-logo { font-family: var(--mono); font-size: 0.8rem; color: #e8c980; letter-spacing: 0.06em; font-weight: 500; }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { font-family: var(--mono); font-size: 0.75rem; color: #9a7840; text-decoration: none; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 500; transition: color 0.15s; }
+.nav-links a:hover { color: #e8c980; }
+
+/* HERO */
+#hero { min-height: 100vh; display: flex; align-items: center; padding: 7rem 3rem 5rem; }
+.hero-inner { max-width: 1080px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 240px; gap: 4rem; align-items: center; }
+.hero-photo { width: 220px; height: 280px; border-radius: 4px; background: var(--bg3); border: 1px solid var(--border2); overflow: hidden; position: relative; justify-self: end; }
+.hero-photo img { width: 100%; height: 100%; object-fit: cover; }
+.hero-photo-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.75rem; color: var(--meta); font-family: var(--mono); font-size: 0.65rem; text-align: center; }
+.hero-eyebrow { font-family: var(--mono); font-size: 0.75rem; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; font-weight: 500; }
+h1.hero-name { font-family: var(--display); font-size: clamp(2.8rem, 5.5vw, 4.5rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; color: var(--text); margin-bottom: 1.2rem; }
+h1.hero-name span { color: var(--accent); }
+.hero-tagline { font-size: 1.15rem; color: var(--sub); max-width: 520px; margin-bottom: 2rem; line-height: 1.85; border-left: 3px solid var(--accent); padding-left: 1.1rem; }
+.hero-ctas { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 3rem; }
+.btn { display: inline-block; text-decoration: none; font-family: var(--mono); font-size: 0.78rem; padding: 0.7rem 1.5rem; border-radius: 3px; letter-spacing: 0.04em; font-weight: 500; transition: all 0.15s; }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent-h); }
+.btn-ghost { border: 1.5px solid var(--border2); color: var(--sub); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+.hero-stats { display: flex; gap: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+.stat-num { font-family: var(--display); font-size: 2rem; font-weight: 700; color: var(--text); }
+.stat-label { font-family: var(--mono); font-size: 0.65rem; color: var(--sub); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.1rem; }
+
+/* SECTION */
+section { padding: 5rem 2rem; background: var(--bg); }
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 3rem 3rem;
+  background: var(--bg2);
+  border-radius: 10px;
+  box-shadow: 0 2px 28px rgba(0,0,0,0.07), 0 1px 5px rgba(0,0,0,0.04);
+  border: 1px solid var(--border);
+}
+.sec-eyebrow { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem; font-weight: 500; }
+.sec-title { font-family: var(--display); font-size: clamp(2rem, 3.5vw, 2.7rem); font-weight: 700; letter-spacing: -0.02em; color: var(--text); margin-bottom: 0.75rem; }
+.sec-desc { color: var(--meta); max-width: 560px; margin-bottom: 3rem; font-size: 1rem; }
+
+/* ABOUT */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+.about-text p { color: var(--text); margin-bottom: 1rem; font-size: 1rem; line-height: 1.8; }
+.about-info { display: flex; flex-direction: column; gap: 1.1rem; }
+.info-row { display: flex; flex-direction: column; gap: 0.2rem; }
+.info-label { font-family: var(--mono); font-size: 0.68rem; color: var(--meta); letter-spacing: 0.07em; text-transform: uppercase; font-weight: 500; }
+.info-val { font-size: 0.95rem; color: var(--text); }
+
+/* EXPERIENCE */
+.exp-list { display: flex; flex-direction: column; }
+.exp-item { display: grid; grid-template-columns: 130px 1fr; gap: 0 2.5rem; padding: 2.5rem 0.75rem; border-bottom: 1px solid var(--border); border-left: 3px solid transparent; border-radius: 4px; transition: border-left-color 0.2s, background 0.2s; }
+.exp-item:first-child { padding-top: 0.75rem; }
+.exp-item:last-child { border-bottom: none; }
+.exp-item:hover { border-left-color: var(--accent); background: var(--bg3); }
+.exp-period { font-family: var(--mono); font-size: 0.75rem; color: var(--sub); line-height: 1.6; font-weight: 500; }
+.exp-org { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.3rem; font-weight: 500; }
+.exp-role { font-family: var(--display); font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+.exp-desc { font-size: 0.95rem; color: var(--sub); margin-bottom: 1rem; line-height: 1.7; }
+.exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; }
+.exp-bullets li { font-size: 0.93rem; color: var(--text); padding-left: 1.2rem; position: relative; line-height: 1.65; }
+.exp-bullets li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 0.72rem; top: 0.22rem; font-family: var(--mono); font-weight: 500; }
+
+/* PROJECTS */
+.proj-list { display: flex; flex-direction: column; gap: 2rem; }
+.proj-item { display: grid; grid-template-columns: 260px 1fr; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; background: var(--bg); transition: border-color 0.2s, box-shadow 0.2s, border-left-color 0.2s; border-left: 3px solid transparent; }
+.proj-item:hover { border-color: var(--border2); border-left-color: var(--accent); box-shadow: 0 4px 20px rgba(0,0,0,0.09); }
+.proj-media { background: var(--bg3); min-height: 200px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+.proj-media video, .proj-media img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
+.proj-media-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; color: var(--meta); font-family: var(--mono); font-size: 0.62rem; text-align: center; padding: 1rem; }
+.proj-content { padding: 1.75rem 1.75rem 1.75rem 0; }
+.proj-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.85rem; }
+.tag { font-family: var(--mono); font-size: 0.63rem; padding: 0.2rem 0.55rem; border-radius: 3px; font-weight: 500; }
+.tag-blue   { background: #f3f4f6; color: #1f2937; border: 1px solid #d1d5db; }
+.tag-red    { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+.tag-green  { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+.tag-grey   { background: #f3f4f6; color: #374151; border: 1px solid #e5e7eb; }
+.tag-teal   { background: #ccfbf1; color: #0f766e; border: 1px solid #99f6e4; }
+.tag-orange { background: #ffedd5; color: #9a3412; border: 1px solid #fed7aa; }
+.proj-title { font-family: var(--display); font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 0.4rem; }
+.proj-desc { font-size: 0.92rem; color: var(--sub); margin-bottom: 0.9rem; line-height: 1.65; }
+.proj-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+.proj-bullets li { font-size: 0.9rem; color: var(--text); padding-left: 1.1rem; position: relative; line-height: 1.65; }
+.proj-bullets li::before { content: '↳'; position: absolute; left: 0; color: var(--accent); font-family: var(--mono); font-size: 0.68rem; top: 0.22rem; font-weight: 500; }
+.proj-metric { font-family: var(--mono); font-size: 0.73rem; color: var(--sub); border-top: 1px solid var(--border); padding-top: 0.75rem; margin-top: 0.5rem; font-weight: 500; }
+.proj-links { display: flex; gap: 0.6rem; margin-top: 0.6rem; }
+.proj-link { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); text-decoration: none; border: 1.5px solid var(--accent); padding: 0.28rem 0.65rem; border-radius: 3px; font-weight: 500; transition: all 0.15s; }
+.proj-link:hover { background: var(--accent); color: #fff; }
+
+/* SCALE */
+.scale-row { display: flex; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.scale-col { flex: 1; padding: 1.75rem 1.5rem; border-right: 1px solid var(--border); background: var(--bg2); transition: background 0.15s; position: relative; }
+.scale-col:last-child { border-right: none; }
+.scale-col:hover { background: var(--bg3); }
+.scale-num { font-family: var(--mono); font-size: 0.72rem; color: var(--sub); font-weight: 500; margin-bottom: 0.35rem; }
+.scale-name { font-family: var(--display); font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: 0.2rem; }
+.scale-range { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); font-weight: 500; margin-bottom: 0.85rem; }
+.scale-chips { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.85rem; }
+.chip { font-family: var(--mono); font-size: 0.63rem; padding: 0.18rem 0.5rem; border-radius: 3px; background: #fef3e2; color: #7c3a00; border: 1px solid #f0c070; font-weight: 500; }
+.chip-primary { background: #fef3e2; color: #7c3a00; border: 1.5px solid var(--accent); font-weight: 600; }
+.chip-grey { background: #fef3e2; color: #4a3010; border: 1px solid #e8c890; }
+.scale-note { font-size: 0.87rem; color: var(--sub); line-height: 1.65; }
+.scale-arrow {
+  position: absolute;
+  right: -0.72rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--mono);
+  font-size: 1rem;
+  color: var(--accent);
+  background: var(--bg2);
+  padding: 0.1rem 0.15rem;
+  line-height: 1;
+  z-index: 3;
+  letter-spacing: -0.05em;
+}
+
+/* PUBLICATIONS (compact) */
+#publications { padding: 4rem 2rem; }
+.pub-compact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+.pub-compact-item { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.9rem 1rem; background: var(--bg2); border: 1px solid var(--border); border-left: 3px solid transparent; border-radius: 5px; transition: border-left-color 0.2s, box-shadow 0.2s; }
+.pub-compact-item:hover { border-left-color: var(--accent); box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+.pub-compact-body { display: flex; flex-direction: column; gap: 0.2rem; }
+@media (max-width: 800px) { .pub-compact-grid { grid-template-columns: 1fr; } }
+.pub-list { display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.pub-item { display: flex; gap: 1rem; padding: 1.1rem 1.25rem; background: var(--bg2); border-bottom: 1px solid var(--border); align-items: flex-start; transition: background 0.15s; }
+.pub-item:last-child { border-bottom: none; }
+.pub-item:hover { background: var(--bg3); }
+.pub-badge { font-family: var(--mono); font-size: 0.63rem; padding: 0.2rem 0.55rem; border-radius: 3px; font-weight: 500; flex-shrink: 0; white-space: nowrap; }
+.badge-nc    { background: #fef3e2; color: #7c3a00; border: 1px solid #f0c070; }
+.badge-npj   { background: #dcfce7; color: #14532d; border: 1px solid #bbf7d0; }
+.badge-acs   { background: #fff7e6; color: #c45a00; border: 1px solid #f0c070; }
+.badge-other { background: #fef3e2; color: #4a3010; border: 1px solid #e8c890; }
+.pub-year { font-family: var(--mono); font-size: 0.75rem; color: var(--sub); flex-shrink: 0; padding-top: 0.15rem; min-width: 38px; font-weight: 500; }
+.pub-title { font-size: 0.93rem; color: var(--text); line-height: 1.55; }
+.pub-journal-name { font-family: var(--mono); font-size: 0.67rem; color: var(--meta); margin-top: 0.2rem; font-weight: 500; }
+
+/* SKILLS */
+.skills-icon-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2rem; }
+.skill-col { display: flex; flex-direction: column; align-items: flex-start; }
+.skill-icon-wrap { width: 44px; height: 44px; color: var(--accent); margin-bottom: 0.9rem; opacity: 0.9; }
+.skill-icon-wrap svg { width: 100%; height: 100%; }
+.skill-col-label { font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--accent); font-weight: 600; margin-bottom: 0.7rem; }
+.skill-chip-row { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.skchip { font-family: var(--mono); font-size: 0.63rem; padding: 0.2rem 0.55rem; border-radius: 3px; background: var(--bg2); border: 1px solid var(--border2); color: var(--sub); font-weight: 500; }
+@media (max-width: 900px) { .skills-icon-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 600px) { .skills-icon-grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* CONTACT */
+.contact-links { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
+.c-link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 0.8rem; color: var(--text); text-decoration: none; border: 1.5px solid var(--border2); padding: 0.65rem 1.4rem; border-radius: 4px; font-weight: 500; transition: all 0.15s; }
+.c-link:hover { color: #fff; background: var(--accent); border-color: var(--accent); }
+
+/* FOOTER */
+footer { border-top: 1px solid var(--border); padding: 1.5rem 3rem; display: flex; justify-content: space-between; background: var(--bg2); }
+.footer-txt { font-family: var(--mono); font-size: 0.72rem; color: var(--sub); font-weight: 500; }
+
+/* SCROLL INDICATOR */
+.scroll-indicator {
+  position: absolute;
+  bottom: 2.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  opacity: 1;
+  transition: opacity 0.7s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+.scroll-indicator.hidden { opacity: 0; }
+.scroll-indicator-line {
+  width: 1px;
+  height: 26px;
+  background: linear-gradient(to bottom, transparent, rgba(180,83,9,0.40));
+}
+.scroll-indicator-chevron {
+  width: 9px;
+  height: 9px;
+  border-right: 1.5px solid rgba(180,83,9,0.50);
+  border-bottom: 1.5px solid rgba(180,83,9,0.50);
+  transform: rotate(45deg);
+  animation: si-bounce 2s ease-in-out infinite;
+}
+.scroll-indicator-chevron.si-c2 {
+  margin-top: -5px;
+  opacity: 0.38;
+  animation-delay: 0.2s;
+}
+@keyframes si-bounce {
+  0%, 100% { transform: rotate(45deg) translateY(0); opacity: 1; }
+  50%       { transform: rotate(45deg) translateY(5px); opacity: 0.7; }
+}
+
+/* RESPONSIVE */
+@media (max-width: 800px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { gap: 1.2rem; }
+  .container { padding: 1.75rem 1.25rem; border-radius: 8px; }
+  section { padding: 3rem 1rem; }
+  #publications { padding: 3rem 1rem; }
+  #hero { padding: 6rem 1.5rem 4rem; }
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-photo { display: none; }
+  .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .exp-item { grid-template-columns: 1fr; gap: 0.25rem; }
+  .proj-item { grid-template-columns: 1fr; }
+  .proj-media { min-height: 180px; }
+  .proj-content { padding: 1.25rem; }
+  .scale-row { flex-direction: column; }
+  .scale-col { border-right: none; border-bottom: 1px solid var(--border); }
+  .scale-col:last-child { border-bottom: none; }
+  .scale-arrow { position: static; transform: none; background: transparent; font-size: 0.9rem; display: block; margin-top: 0.8rem; color: var(--accent); content: '↓'; }
+  .scale-arrow::before { content: '↓'; }
+  .scale-arrow { font-size: 0; }
+  .scale-arrow::before { font-size: 0.9rem; font-family: var(--mono); }
+  .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+  footer { flex-direction: column; gap: 0.4rem; }
+}
+</style>
+<style>
+/* BACKGROUND ICONS — inside each section */
+section { position: relative; }
+.sec-bg { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+.sec-bg svg { position: absolute; color: var(--accent); }
+.container, .hero-inner { position: relative; z-index: 1; }
+
+/* SECTION MARGIN VIGNETTE — subtle depth behind cards, not hero */
+section:not(#hero)::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right,
+      rgba(0,0,0,0.025) 0%,
+      transparent 6%,
+      transparent 94%,
+      rgba(0,0,0,0.025) 100%
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HERO ENHANCED — v14
+═══════════════════════════════════════════════════════════ */
+
+/* dot-grid overridden by dark theme below */
+
+/* Particle canvas lives behind everything */
+#hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Right column — stacked photo + arm panel */
+/* .hero-right removed — photo direct child of hero-inner */
+
+/* Override hero-inner grid for new two-col layout */
+
+
+/* ── Arm panel ─────────────────────────────────────────── */
+
+
+
+
+
+
+  50%       { opacity: 0.35; box-shadow: none; }
+}
+
+
+
+
+
+/* ── Stat counter ──────────────────────────────────────── */
+.stat-num {
+  min-width: 2.5ch;
+  display: inline-block;
+}
+
+/* ── Eyebrow typewriter cursor ─────────────────────────── */
+.hero-eyebrow.tw-active {
+  border-right: 2px solid var(--accent);
+}
+
+/* ── Responsive adjustments ────────────────────────────── */
+@media (max-width: 800px) {
+  
+  .hero-right { align-items: center; }
+}
+
+
+/* Fixed dot matrix — warm amber dots for light hero */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(rgba(168,94,10,0.10) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+  z-index: 0;
+}
+/* Remove dot matrix from hero since body::before handles it */
+#hero {
+  background:
+    radial-gradient(ellipse 70% 60% at 20% 55%, rgba(210,155,60,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 65% at 85% 25%, rgba(120,100,70,0.09) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 50% at 55% 90%, rgba(180,120,40,0.08) 0%, transparent 55%),
+    #f7f2e8 !important;
+}
+
+
+/* ═══ HERO — Pale Indigo ════════════════════════════════ */
+
+/* Aurora blobs — soft indigo-violet on light bg */
+.hero-blobs { position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:0; }
+.blob       { position:absolute; border-radius:50%; }
+.blob-1 {
+  width:70%; height:75%; top:-20%; left:-10%;
+  background: radial-gradient(ellipse at 40% 40%, rgba(210,155,60,0.18) 0%, transparent 62%);
+  filter: blur(90px);
+  animation: blobA 22s ease-in-out infinite alternate;
+}
+.blob-2 {
+  width:55%; height:65%; bottom:-20%; right:-8%;
+  background: radial-gradient(ellipse at 60% 60%, rgba(150,100,40,0.12) 0%, transparent 62%);
+  filter: blur(90px);
+  animation: blobB 28s ease-in-out infinite alternate-reverse;
+}
+.blob-3 {
+  width:45%; height:55%; top:20%; left:40%;
+  background: radial-gradient(ellipse at 50% 50%, rgba(180,120,30,0.10) 0%, transparent 62%);
+  filter: blur(100px);
+  animation: blobA 35s ease-in-out infinite alternate;
+}
+@keyframes blobA {
+  0%   { transform: translate(0,0)   scale(1); }
+  100% { transform: translate(4%,7%) scale(1.07); }
+}
+@keyframes blobB {
+  0%   { transform: translate(0,0)    scale(1); }
+  100% { transform: translate(-5%,-4%) scale(1.09); }
+}
+
+/* ── Typography — dark indigo text on pale indigo bg ──── */
+#hero .hero-eyebrow {
+  font-size: 0.76rem;
+  letter-spacing: 0.18em;
+  color: #a85e0a;
+}
+#hero h1.hero-name {
+  font-size: clamp(3.6rem, 6.2vw, 5.8rem);
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  color: #1e1007;
+}
+#hero h1.hero-name span { color: #a85e0a; }
+
+#hero .hero-tagline {
+  font-size: 1.08rem;
+  line-height: 1.90;
+  color: #6b5030;
+  border-left-color: #c47a20;
+  max-width: 510px;
+}
+#hero .btn-primary {
+  background: #a85e0a;
+  color: #fff;
+  font-size: 0.76rem;
+}
+#hero .btn-primary:hover { background: #8a4a06; }
+#hero .btn-ghost {
+  border-color: rgba(100,60,10,0.20);
+  color: #6b5030;
+  font-size: 0.76rem;
+}
+#hero .btn-ghost:hover { border-color: #a85e0a; color: #a85e0a; }
+
+#hero .hero-stats { border-top-color: rgba(100,60,10,0.10); }
+#hero .stat-num   { color: #1e1007; font-size: 2.2rem; }
+#hero .stat-label { color: #9a7040; font-size: 0.64rem; letter-spacing: 0.09em; }
+
+/* Photo on indigo bg */
+#hero .hero-photo {
+  border-color: rgba(168,94,10,0.20);
+  background: #ede4d0;
+  box-shadow: 0 8px 40px rgba(100,55,10,0.13), 0 2px 8px rgba(100,55,10,0.07);
+}
+#hero .hero-photo-placeholder { color: #9a7040; }
+
+/* Canvas behind blobs */
+#hero-canvas { z-index: 1; }
+.hero-inner  { position: relative; z-index: 2; }
+.hero-blobs  { z-index: 0; }
+
+/* ── Hero: Open to Work badge ── */
+.hero-otw {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #4ade80;
+  margin-bottom: 1.1rem;
+  border: 1px solid rgba(74,222,128,0.25);
+  padding: 0.28rem 0.75rem 0.28rem 0.6rem;
+  border-radius: 100px;
+  width: fit-content;
+  background: rgba(74,222,128,0.06);
+}
+.otw-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+  flex-shrink: 0;
+  box-shadow: 0 0 6px rgba(74,222,128,0.7);
+  animation: otw-pulse 2s ease-in-out infinite;
+}
+@keyframes otw-pulse {
+  0%, 100% { opacity: 1;   box-shadow: 0 0 6px  rgba(74,222,128,0.7); }
+  50%       { opacity: 0.5; box-shadow: 0 0 14px rgba(74,222,128,0.4); }
+}
+
+/* ── Hero: Role subtitle ── */
+.hero-role {
+  font-family: var(--display);
+  font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+  font-weight: 700;
+  color: #8a6830;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.2rem;
+  margin-top: 0.15rem;
+}
+
+/* ── Hero: Skill chips ── */
+.hero-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.1rem;
+}
+.hchip {
+  font-family: var(--mono);
+  font-size: 0.63rem;
+  font-weight: 500;
+  padding: 0.22rem 0.6rem;
+  border-radius: 3px;
+  background: rgba(168,94,10,0.08);
+  border: 1px solid rgba(168,94,10,0.20);
+  color: #a85e0a;
+  letter-spacing: 0.03em;
+}
+
+/* ── Hero: Credentials line ── */
+.hero-creds {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: #9a7040;
+  margin-bottom: 1.8rem;
+  font-weight: 500;
+}
+.cred-sep { color: #d4b06a; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">yilong-sim.github.io</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#scale">Scale Stack</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#publications">Papers</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <!-- Animated particle-network canvas -->
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+  <!-- Aurora blobs -->
+  <div class="hero-blobs" aria-hidden="true"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div></div>
+
+  <div class="hero-inner">
+    <!-- ── Left: text content ── -->
+    <div class="hero-text">
+
+      <!-- Open to Work signal -->
+      <div class="hero-otw" id="hero-eyebrow">
+        <span class="otw-dot"></span>Open to Work
+      </div>
+
+      <!-- Name -->
+      <h1 class="hero-name">Yilong<br><span>Zhou</span></h1>
+
+      <!-- Role title -->
+      <div class="hero-role">Physics &amp; Robotics Simulation Engineer</div>
+
+      <!-- Narrative tagline -->
+      <p class="hero-tagline">
+        I simulate physics across four orders of magnitude — from quantum electron structure to robot contact dynamics. My edge isn't the tools. It's knowing when the output is wrong and why.
+      </p>
+
+      <!-- Skill chips -->
+      <div class="hero-chips">
+        <span class="hchip">Multi-scale Sim</span>
+        <span class="hchip">ML Potentials</span>
+        <span class="hchip">FEA / FSI</span>
+        <span class="hchip">Contact Mechanics</span>
+        <span class="hchip">Soft Robotics</span>
+        <span class="hchip">Sim-to-Real</span>
+      </div>
+
+      <!-- Credentials -->
+      <div class="hero-creds">
+        <span>PhD · Duke University</span>
+        <span class="cred-sep">·</span>
+        <span>Postdoc · LBNL</span>
+        <span class="cred-sep">·</span>
+        <span>LLNL</span>
+      </div>
+
+      <!-- CTAs -->
+      <div class="hero-ctas">
+        <a href="mailto:yilongz393@gmail.com" class="btn btn-primary">✉ yilongz393@gmail.com</a>
+        <a href="#projects" class="btn btn-ghost">View Projects ↓</a>
+        <a href="Yilong_Zhou_Resume.pdf" class="btn btn-ghost" target="_blank">Resume ↗</a>
+      </div>
+
+      <!-- Stats -->
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num" data-target="4" data-suffix="">4</div>
+          <div class="stat-label">Sim Scales</div>
+        </div>
+        <div>
+          <div class="stat-num" data-target="100" data-suffix="×">100×</div>
+          <div class="stat-label">MD Speedup</div>
+        </div>
+        <div>
+          <div class="stat-num" data-target="3" data-suffix="×">3×</div>
+          <div class="stat-label">NSF HPC Allocations</div>
+        </div>
+        <div>
+          <div class="stat-num" data-target="17" data-suffix="+">17+</div>
+          <div class="stat-label">Publications</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Right: photo ── -->
+    <div class="hero-photo">
+      <img src="photo.jpg" alt="Yilong Zhou">
+    </div>
+  </div>
+  <div class="scroll-indicator" id="scroll-indicator" aria-hidden="true">
+    <div class="scroll-indicator-line"></div>
+    <div class="scroll-indicator-chevron"></div>
+    <div class="scroll-indicator-chevron si-c2"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+      <div class="sec-bg" aria-hidden="true">
+    <svg style="top:12%;right:3%;width:70px;opacity:.22;" viewBox="0 0 20 26" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><line x1="10" y1="0" x2="10" y2="5"/><rect x="7" y="5" width="6" height="4" rx="1"/><path d="M7 9 Q5 13 5 18 L7 23 L9 23 L8.5 18 Q8.5 13 9 9"/><path d="M13 9 Q15 13 15 18 L13 23 L11 23 L11.5 18 Q11.5 13 11 9"/></svg><svg style="top:30%;left:2%;width:70px;opacity:.2;" viewBox="0 0 24 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2.5"/><line x1="12" y1="6.5" x2="12" y2="17"/><line x1="5" y1="10" x2="19" y2="10"/><circle cx="5" cy="10" r="1.3"/><circle cx="19" cy="10" r="1.3"/><line x1="5" y1="10" x2="3" y2="18"/><circle cx="3" cy="18" r="1.1"/><line x1="19" y1="10" x2="21" y2="18"/><circle cx="21" cy="18" r="1.1"/><line x1="9" y1="17" x2="15" y2="17"/><circle cx="9" cy="17" r="1.2"/><circle cx="15" cy="17" r="1.2"/><line x1="9" y1="17" x2="7" y2="27"/><circle cx="7" cy="27" r="1.1"/><line x1="7" y1="27" x2="7" y2="35"/><line x1="15" y1="17" x2="17" y2="27"/><circle cx="17" cy="27" r="1.1"/><line x1="17" y1="27" x2="17" y2="35"/></svg><svg style="bottom:10%;right:8%;width:80px;opacity:.2;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12 A7 7 0 1 1 12 19"/><polyline points="10,21 12,19 10,17"/><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="1.2" fill="currentColor" opacity=".4"/></svg>
+  </div>
+  <div class="container">
+    <div class="sec-eyebrow">// about</div>
+    <h2 class="sec-title">Who I Am</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm a postdoctoral scholar at <strong>Lawrence Berkeley National Laboratory</strong>, working at the intersection of computational physics and autonomous systems. My research spans four simulation scales — quantum DFT, molecular dynamics, continuum FEA, and rigid-body robotics — with a focus on knowing what physics breaks down at each scale transition.
+        </p>
+        <p>
+          I completed my PhD in <strong>Mechanical Engineering & Materials Science at Duke University</strong>, where I developed custom C++ solvers and deployed large-scale simulations on NSF HPC clusters. I'm now transitioning into industry roles in physical simulation and robotics AI.
+        </p>
+        <p>
+          My competitive advantage isn't tool proficiency — it's <strong>physical intuition</strong>: the ability to judge whether a simulation output is physically correct, where a model will fail, and why a policy trained in simulation won't transfer to hardware.
+        </p>
+      </div>
+      <div class="about-info">
+        <div class="info-row">
+          <span class="info-label">Current Position</span>
+          <span class="info-val">Postdoctoral scholar · LBNL</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">PhD</span>
+          <span class="info-val">Mechanical Engineering & Materials Science · Duke University</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Location</span>
+          <span class="info-val">Bay Area, CA</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Target Roles</span>
+          <span class="info-val">Physics / Robotics Simulation Engineer · Physical AI Researcher</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Compute Resources</span>
+          <span class="info-val">3× NSF XSEDE · LBNL Savio HPC · Dual RTX 4090</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+      <div class="sec-bg" aria-hidden="true">
+    <svg style="top:8%;right:2%;width:130px;opacity:.2;" viewBox="0 0 36 30" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="18" cy="12" rx="9" ry="5"/><circle cx="27" cy="9" r="3"/><line x1="30" y1="8" x2="33" y2="7"/><line x1="24" y1="17" x2="25" y2="23"/><line x1="25" y1="23" x2="24" y2="28"/><circle cx="24" cy="17" r="1.2"/><circle cx="25" cy="23" r="1.1"/><line x1="20" y1="17" x2="21" y2="23"/><line x1="21" y1="23" x2="20" y2="28"/><circle cx="20" cy="17" r="1.2"/><circle cx="21" cy="23" r="1.1"/><line x1="14" y1="17" x2="12" y2="23"/><line x1="12" y1="23" x2="13" y2="28"/><circle cx="14" cy="17" r="1.2"/><circle cx="12" cy="23" r="1.1"/><line x1="10" y1="16" x2="8" y2="22"/><line x1="8" y1="22" x2="9" y2="28"/><circle cx="10" cy="16" r="1.2"/><circle cx="8" cy="22" r="1.1"/><path d="M9 10 Q5 8 4 5"/></svg><svg style="top:45%;left:3%;width:100px;opacity:.22;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="20" width="10" height="3" rx="1"/><circle cx="12" cy="20" r="2"/><line x1="12" y1="20" x2="7" y2="13"/><circle cx="7" cy="13" r="1.8"/><line x1="7" y1="13" x2="15" y2="7"/><circle cx="15" cy="7" r="1.8"/><line x1="15" y1="7" x2="20" y2="4"/><circle cx="20" cy="4" r="1.2"/><line x1="20" y1="4" x2="22" y2="2"/><line x1="20" y1="4" x2="22" y2="6"/></svg><svg style="bottom:6%;right:5%;width:65px;opacity:.2;" viewBox="0 0 24 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2.5"/><line x1="12" y1="6.5" x2="12" y2="17"/><line x1="5" y1="10" x2="19" y2="10"/><circle cx="5" cy="10" r="1.3"/><circle cx="19" cy="10" r="1.3"/><line x1="5" y1="10" x2="3" y2="18"/><circle cx="3" cy="18" r="1.1"/><line x1="19" y1="10" x2="21" y2="18"/><circle cx="21" cy="18" r="1.1"/><line x1="9" y1="17" x2="15" y2="17"/><circle cx="9" cy="17" r="1.2"/><circle cx="15" cy="17" r="1.2"/><line x1="9" y1="17" x2="7" y2="27"/><circle cx="7" cy="27" r="1.1"/><line x1="7" y1="27" x2="7" y2="35"/><line x1="15" y1="17" x2="17" y2="27"/><circle cx="17" cy="27" r="1.1"/><line x1="17" y1="27" x2="17" y2="35"/></svg>
+  </div>
+  <div class="container">
+    <div class="sec-eyebrow">// experience</div>
+    <h2 class="sec-title">Where I've Worked</h2>
+    <div class="exp-list">
+
+      <div class="exp-item">
+        <div class="exp-left">
+          <div class="exp-period">Jan 2025 –<br>Present</div>
+          <div class="exp-dot"></div>
+        </div>
+        <div class="exp-right">
+          <div class="exp-org">Lawrence Berkeley National Laboratory</div>
+          <div class="exp-role">Postdoctoral Scholar · Materials Science Division</div>
+          <div class="exp-desc">GPU-accelerated physics simulation pipelines for constrained multi-body dynamical systems on Linux HPC clusters.</div>
+          <ul class="exp-bullets">
+            <li>Built GPU-accelerated simulation pipelines for constrained multi-body dynamical systems on LBNL Savio HPC; validated fidelity through energy-based stability analysis and trajectory convergence metrics</li>
+            <li>Developed automated pipelines coupling simulation runs with downstream analysis, enabling rapid parameter sweeps — directly applicable to environment tuning, reward shaping, and domain randomization in RL training</li>
+            <li>Actively building MuJoCo contact physics models and PPO-based RL policies (Stable-Baselines3) for sim-to-real manipulation tasks</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-left">
+          <div class="exp-period">Jun 2022 –<br>Nov 2024</div>
+          <div class="exp-dot"></div>
+        </div>
+        <div class="exp-right">
+          <div class="exp-org">Lawrence Livermore National Laboratory</div>
+          <div class="exp-role">Postdoctoral Researcher · Materials Science Division</div>
+          <div class="exp-desc">ML-augmented physics simulation bridging quantum-scale ab initio calculations and large-scale molecular dynamics.</div>
+          <ul class="exp-bullets">
+            <li>Developed DeePMD neural-network force field framework achieving 100×+ simulation speedup over DFT while preserving physical accuracy; methodology directly analogous to learned dynamics models and sim-to-real transfer in robotics. Published in <em>Physical Chemistry Chemical Physics</em> (2025, First & Corresponding Author)</li>
+            <li>Validated surrogate model accuracy against reference DFT benchmarks across thermodynamic conditions, developing rigorous fidelity assessment protocols — the same physical intuition required to evaluate whether a contact-physics or actuator model is trustworthy in robotics simulation</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-left">
+          <div class="exp-period">Aug 2017 –<br>May 2022</div>
+          <div class="exp-dot"></div>
+        </div>
+        <div class="exp-right">
+          <div class="exp-org">Duke University</div>
+          <div class="exp-role">Graduate Research Assistant · Arya Lab</div>
+          <div class="exp-desc">Multiscale simulation frameworks linking molecular dynamics to continuum mechanics. Three NSF XSEDE HPC allocation proposals awarded.</div>
+          <ul class="exp-bullets">
+            <li>Designed and validated 3D FSI simulations in COMSOL Multiphysics for soft robotic actuators: modeled pneumatically driven balloon actuators, characterized nonlinear bending dynamics, and used simulation outputs to inform actuation control strategies. Published in <em>Advanced Intelligent Systems</em> (2021)</li>
+            <li>Pioneered a global Monte Carlo optimization algorithm implemented in C++ from scratch, solving combinatorial search over complex multi-modal energy landscapes — directly applicable to motion planning and configuration-space search in robotics. Published in <em>Nature Communications</em> (2022, Featured Article)</li>
+            <li>Developed ML-based many-body force-field potentials for anisotropic systems, achieving 100×+ computational efficiency via surrogate modeling. Published in <em>npj Computational Materials</em> (2023)</li>
+            <li>Owned the full simulation-to-validation pipeline: collaborated with experimentalists to benchmark model predictions against physical measurements, building rigorous fidelity verification habits that transfer directly to sim-to-real gap assessment</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-left">
+          <div class="exp-period">Sep 2013 –<br>Dec 2016</div>
+          <div class="exp-dot"></div>
+        </div>
+        <div class="exp-right">
+          <div class="exp-org">Clemson University</div>
+          <div class="exp-role">Graduate Research Assistant</div>
+          <div class="exp-desc">3D COMSOL Multiphysics finite-element models for coupled-physics structural mechanics in microfluidic systems.</div>
+          <ul class="exp-bullets">
+            <li>Developed FEA models for electrokinetic transport, Joule heating, and magnetophoretic force fields — building deep COMSOL expertise across multiphysics coupling configurations</li>
+            <li>Validated simulation predictions against experimental measurements from lab-on-chip devices, establishing quantitative accuracy benchmarks</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+      <div class="sec-bg" aria-hidden="true">
+    <svg style="top:4%;right:2%;width:75px;opacity:.22;" viewBox="0 0 24 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2.5"/><line x1="12" y1="6.5" x2="12" y2="17"/><line x1="5" y1="10" x2="19" y2="10"/><circle cx="5" cy="10" r="1.3"/><circle cx="19" cy="10" r="1.3"/><line x1="5" y1="10" x2="3" y2="18"/><circle cx="3" cy="18" r="1.1"/><line x1="19" y1="10" x2="21" y2="18"/><circle cx="21" cy="18" r="1.1"/><line x1="9" y1="17" x2="15" y2="17"/><circle cx="9" cy="17" r="1.2"/><circle cx="15" cy="17" r="1.2"/><line x1="9" y1="17" x2="7" y2="27"/><circle cx="7" cy="27" r="1.1"/><line x1="7" y1="27" x2="7" y2="35"/><line x1="15" y1="17" x2="17" y2="27"/><circle cx="17" cy="27" r="1.1"/><line x1="17" y1="27" x2="17" y2="35"/></svg><svg style="top:18%;left:3%;width:68px;opacity:.2;" viewBox="0 0 20 26" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><line x1="10" y1="0" x2="10" y2="5"/><rect x="7" y="5" width="6" height="4" rx="1"/><path d="M7 9 Q5 13 5 18 L7 23 L9 23 L8.5 18 Q8.5 13 9 9"/><path d="M13 9 Q15 13 15 18 L13 23 L11 23 L11.5 18 Q11.5 13 11 9"/></svg><svg style="top:37%;right:4%;width:90px;opacity:.2;" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><line x1="14" y1="14" x2="5" y2="5"/><line x1="14" y1="14" x2="23" y2="5"/><line x1="14" y1="14" x2="5" y2="23"/><line x1="14" y1="14" x2="23" y2="23"/><rect x="11" y="11" width="6" height="6" rx="1"/><circle cx="5" cy="5" r="3.2"/><circle cx="23" cy="5" r="3.2"/><circle cx="5" cy="23" r="3.2"/><circle cx="23" cy="23" r="3.2"/><line x1="2" y1="5" x2="8" y2="5"/><line x1="5" y1="2" x2="5" y2="8"/><line x1="20" y1="5" x2="26" y2="5"/><line x1="23" y1="2" x2="23" y2="8"/><line x1="2" y1="23" x2="8" y2="23"/><line x1="5" y1="20" x2="5" y2="26"/><line x1="20" y1="23" x2="26" y2="23"/><line x1="23" y1="20" x2="23" y2="26"/></svg><svg style="top:55%;left:2%;width:100px;opacity:.22;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="20" width="10" height="3" rx="1"/><circle cx="12" cy="20" r="2"/><line x1="12" y1="20" x2="7" y2="13"/><circle cx="7" cy="13" r="1.8"/><line x1="7" y1="13" x2="15" y2="7"/><circle cx="15" cy="7" r="1.8"/><line x1="15" y1="7" x2="20" y2="4"/><circle cx="20" cy="4" r="1.2"/><line x1="20" y1="4" x2="22" y2="2"/><line x1="20" y1="4" x2="22" y2="6"/></svg><svg style="top:72%;right:3%;width:125px;opacity:.2;" viewBox="0 0 36 30" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="18" cy="12" rx="9" ry="5"/><circle cx="27" cy="9" r="3"/><line x1="30" y1="8" x2="33" y2="7"/><line x1="24" y1="17" x2="25" y2="23"/><line x1="25" y1="23" x2="24" y2="28"/><circle cx="24" cy="17" r="1.2"/><circle cx="25" cy="23" r="1.1"/><line x1="20" y1="17" x2="21" y2="23"/><line x1="21" y1="23" x2="20" y2="28"/><circle cx="20" cy="17" r="1.2"/><circle cx="21" cy="23" r="1.1"/><line x1="14" y1="17" x2="12" y2="23"/><line x1="12" y1="23" x2="13" y2="28"/><circle cx="14" cy="17" r="1.2"/><circle cx="12" cy="23" r="1.1"/><line x1="10" y1="16" x2="8" y2="22"/><line x1="8" y1="22" x2="9" y2="28"/><circle cx="10" cy="16" r="1.2"/><circle cx="8" cy="22" r="1.1"/><path d="M9 10 Q5 8 4 5"/></svg><svg style="bottom:4%;left:4%;width:110px;opacity:.2;" viewBox="0 0 28 22" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="18" height="9" rx="2"/><rect x="10" y="1" width="8" height="3" rx="1"/><circle cx="14" cy="2.5" r="0.9" fill="currentColor" opacity=".5"/><circle cx="8" cy="15" r="4.5"/><circle cx="20" cy="15" r="4.5"/><line x1="8" y1="10.5" x2="8" y2="19.5"/><line x1="3.8" y1="15" x2="12.2" y2="15"/><line x1="20" y1="10.5" x2="20" y2="19.5"/><line x1="15.8" y1="15" x2="24.2" y2="15"/><circle cx="8" cy="15" r="1.5" fill="currentColor" opacity=".2"/><circle cx="20" cy="15" r="1.5" fill="currentColor" opacity=".2"/></svg>
+  </div>
+  <div class="container">
+    <div class="sec-eyebrow">// selected projects</div>
+    <h2 class="sec-title">Projects</h2>
+    <p class="sec-desc">Applied simulation engineering across contact physics, ML potential deployment, digital twin validation, and RL policy transfer.</p>
+
+    <div class="proj-list">
+
+      <!-- PROJECT 1 -->
+      <div class="proj-item">
+        <div class="proj-media">
+          <!-- Add video: <video autoplay muted loop><source src="mujoco-demo.mp4"></video> -->
+          <div class="proj-media-placeholder">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+            <span>Add<br>mujoco-demo.mp4</span>
+          </div>
+        </div>
+        <div class="proj-content">
+          <div class="proj-tags">
+            <span class="tag tag-teal">MuJoCo</span>
+            <span class="tag tag-teal">Robotics</span>
+            <span class="tag tag-grey">RL / PPO</span>
+            <span class="tag tag-orange">C++</span>
+          </div>
+          <div class="proj-title">MuJoCo Contact Physics for Sim-to-Real Manipulation</div>
+          <div class="proj-desc">Physically accurate contact model development for rigid and compliant body interaction, with RL policy training targeting sim-to-real transfer.</div>
+          <ul class="proj-bullets">
+            <li>Designed MuJoCo XML models with calibrated contact parameters (stiffness, damping, friction) to match real hardware behavior</li>
+            <li>Implemented PPO-based locomotion/manipulation policies via Stable-Baselines3; identified sim-to-real failure modes from contact model underrepresentation</li>
+            <li>Diagnosed distribution shift between simulated and real contact dynamics using ensemble disagreement metrics — directly analogous to ML potential deployment failures in MD</li>
+            <li>Training on dual RTX 4090 workstation; extending to Isaac Sim for GPU-parallelized rollouts</li>
+          </ul>
+          <div class="proj-metric">↗ Ongoing · GitHub repo in progress</div>
+          <div class="proj-links">
+            <a href="#" class="proj-link">GitHub →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 2 -->
+      <div class="proj-item">
+        <div class="proj-media">
+          <div class="proj-media-placeholder">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            <span>Add<br>deepmd-demo.mp4</span>
+          </div>
+        </div>
+        <div class="proj-content">
+          <div class="proj-tags">
+            <span class="tag tag-grey">DeePMD</span>
+            <span class="tag tag-teal">ML Potential</span>
+            <span class="tag tag-orange">LAMMPS</span>
+            <span class="tag tag-grey">GPU</span>
+          </div>
+          <div class="proj-title">ML Interatomic Potential Pipeline for GPU-Accelerated MD</div>
+          <div class="proj-desc">End-to-end workflow from DFT data generation to neural network potential training and large-scale deployment on HPC.</div>
+          <ul class="proj-bullets">
+            <li>Generated DFT training data with VASP (PBE functional, PAW pseudopotentials); curated active learning loops to expand configurational coverage</li>
+            <li>Trained DeePMD-kit deep neural network potentials; validated energy/force errors against held-out DFT trajectories</li>
+            <li>Detected deployment failure via ensemble disagreement — trajectories with high force variance flagged bonding environments absent from training set (direct analogy to sim-to-real distribution shift)</li>
+            <li>Deployed via LAMMPS pair_style deepmd on LBNL Savio GPU nodes; 100× speedup over DFT with <5 meV/atom energy error</li>
+          </ul>
+          <div class="proj-metric">↗ Published in npj Computational Materials</div>
+          <div class="proj-links">
+            <a href="#" class="proj-link">Paper ↗</a>
+            <a href="#" class="proj-link">GitHub →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 3 -->
+      <div class="proj-item">
+        <div class="proj-media">
+          <div class="proj-media-placeholder">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+            <span>Add<br>comsol-fsi.mp4</span>
+          </div>
+        </div>
+        <div class="proj-content">
+          <div class="proj-tags">
+            <span class="tag tag-teal">COMSOL</span>
+            <span class="tag tag-grey">FSI / Digital Twin</span>
+            <span class="tag tag-grey">Soft Robotics</span>
+          </div>
+          <div class="proj-title">FSI Digital Twin for Soft Polymer Actuators</div>
+          <div class="proj-desc">Full fluid-structure interaction model of fluidic elastomer actuators, coupling large-deformation mechanics with internal pressure fluid flow.</div>
+          <ul class="proj-bullets">
+            <li>Built COMSOL Multiphysics FSI model coupling Solid Mechanics and Laminar Flow modules; hyperelastic Mooney-Rivlin material model for elastomer</li>
+            <li>Parametrized contact force, deformation profiles, and actuation bandwidth as a function of geometry and pressure input</li>
+            <li>Validated against physical actuator experiments; model predictions within 8% of measured tip displacement</li>
+            <li>Digital twin used to guide design iteration: geometry optimization reduced required actuation pressure by 23%</li>
+          </ul>
+          <div class="proj-metric">↗ Published · COMSOL Multiphysics from grad school through LBNL postdoc</div>
+          <div class="proj-links">
+            <a href="#" class="proj-link">Paper ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 4 -->
+      <div class="proj-item">
+        <div class="proj-media">
+          <div class="proj-media-placeholder">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            <span>Add<br>bhmc-demo.mp4</span>
+          </div>
+        </div>
+        <div class="proj-content">
+          <div class="proj-tags">
+            <span class="tag tag-orange">C++</span>
+            <span class="tag tag-teal">Monte Carlo</span>
+            <span class="tag tag-grey">VASP</span>
+            <span class="tag tag-grey">HPC</span>
+          </div>
+          <div class="proj-title">Basin-Hopping Monte Carlo Global Structure Optimizer</div>
+          <div class="proj-desc">Custom C++ implementation of parallel BHMC for global energy minimization, integrated with VASP for ab initio energy evaluation.</div>
+          <ul class="proj-bullets">
+            <li>Implemented BHMC from scratch in C++ with MPI parallelization; basin escape via random displacement + local gradient descent</li>
+            <li>Integrated with VASP via file I/O: C++ driver spawns VASP calculations, parses OUTCAR, updates configurations</li>
+            <li>Applied to discover lowest-energy polymer assembly configurations not accessible via steered MD or random search</li>
+            <li>Algorithm design maps directly to robot motion planning: global optimizer over energy landscape ≈ sampling-based planner over cost landscape</li>
+          </ul>
+          <div class="proj-metric">↗ Published in ACS Nano · Open-source C++</div>
+          <div class="proj-links">
+            <a href="#" class="proj-link">Paper ↗</a>
+            <a href="#" class="proj-link">GitHub →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 5 -->
+      <div class="proj-item">
+        <div class="proj-media">
+          <div class="proj-media-placeholder">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span>Add<br>ros2-turtlesim.mp4</span>
+          </div>
+        </div>
+        <div class="proj-content">
+          <div class="proj-tags">
+            <span class="tag tag-teal">ROS2</span>
+            <span class="tag tag-grey">Python</span>
+            <span class="tag tag-grey">Learning · In Progress</span>
+          </div>
+          <div class="proj-title">ROS2 Robotics Systems — Turtlesim & Beyond</div>
+          <div class="proj-desc">Systematic ROS2 skill-building: node architecture, pub/sub patterns, services/actions, and custom controller development.</div>
+          <ul class="proj-bullets">
+            <li>Completed ROS2 Humble fundamentals: nodes, topics, services, actions, parameters, launch files</li>
+            <li>Built custom turtlesim controllers (waypoint follower, proportional heading controller) in Python and C++</li>
+            <li>Planned extension: multi-robot coordination and integration with MuJoCo simulation backend via ROS2 bridge</li>
+          </ul>
+          <div class="proj-metric">↗ In Progress · Coursework foundations + planned multi-robot extensions</div>
+          <div class="proj-links">
+            <a href="#" class="proj-link">GitHub →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SCALE STACK -->
+<section id="scale">
+      <div class="sec-bg" aria-hidden="true">
+    <svg style="top:10%;right:3%;width:75px;opacity:.22;" viewBox="0 0 24 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2.5"/><line x1="12" y1="6.5" x2="12" y2="17"/><line x1="5" y1="10" x2="19" y2="10"/><circle cx="5" cy="10" r="1.3"/><circle cx="19" cy="10" r="1.3"/><line x1="5" y1="10" x2="3" y2="18"/><circle cx="3" cy="18" r="1.1"/><line x1="19" y1="10" x2="21" y2="18"/><circle cx="21" cy="18" r="1.1"/><line x1="9" y1="17" x2="15" y2="17"/><circle cx="9" cy="17" r="1.2"/><circle cx="15" cy="17" r="1.2"/><line x1="9" y1="17" x2="7" y2="27"/><circle cx="7" cy="27" r="1.1"/><line x1="7" y1="27" x2="7" y2="35"/><line x1="15" y1="17" x2="17" y2="27"/><circle cx="17" cy="27" r="1.1"/><line x1="17" y1="27" x2="17" y2="35"/></svg><svg style="top:35%;left:3%;width:100px;opacity:.22;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="20" width="10" height="3" rx="1"/><circle cx="12" cy="20" r="2"/><line x1="12" y1="20" x2="7" y2="13"/><circle cx="7" cy="13" r="1.8"/><line x1="7" y1="13" x2="15" y2="7"/><circle cx="15" cy="7" r="1.8"/><line x1="15" y1="7" x2="20" y2="4"/><circle cx="20" cy="4" r="1.2"/><line x1="20" y1="4" x2="22" y2="2"/><line x1="20" y1="4" x2="22" y2="6"/></svg><svg style="bottom:12%;right:7%;width:80px;opacity:.2;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12 A7 7 0 1 1 12 19"/><polyline points="10,21 12,19 10,17"/><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="1.2" fill="currentColor" opacity=".4"/></svg>
+  </div>
+  <div class="container">
+    <div class="sec-eyebrow">// core differentiator</div>
+    <h2 class="sec-title">Cross-Scale Simulation Stack</h2>
+    <p class="sec-desc">Most engineers operate at one scale. I build pipelines that span all four — and understand the physics that breaks down at every handoff.</p>
+    <div class="scale-row">
+      <div class="scale-col">
+        <div class="scale-num">01 / Quantum</div>
+        <div class="scale-name">DFT</div>
+        <div class="scale-range">Å – nm</div>
+        <div class="scale-chips">
+          <span class="chip chip-primary">VASP</span>
+          <span class="chip">PBE / PAW</span>
+          <span class="chip chip-grey">AIMD</span>
+        </div>
+        <div class="scale-note">Electronic structure, forces, bonding environments. Output feeds ML potential training.</div>
+        <div class="scale-arrow">→</div>
+      </div>
+      <div class="scale-col">
+        <div class="scale-num">02 / Atomistic</div>
+        <div class="scale-name">MD</div>
+        <div class="scale-range">nm – μm</div>
+        <div class="scale-chips">
+          <span class="chip chip-primary">LAMMPS</span>
+          <span class="chip">HOOMD-blue</span>
+          <span class="chip chip-primary">DeePMD</span>
+          <span class="chip chip-grey">GPU MD</span>
+        </div>
+        <div class="scale-note">ML potentials enable ab initio accuracy at classical cost. Ensemble disagreement detects distribution shift.</div>
+        <div class="scale-arrow">→</div>
+      </div>
+      <div class="scale-col">
+        <div class="scale-num">03 / Continuum</div>
+        <div class="scale-name">FEA / FSI</div>
+        <div class="scale-range">μm – mm</div>
+        <div class="scale-chips">
+          <span class="chip chip-primary">COMSOL</span>
+          <span class="chip chip-grey">FSI</span>
+          <span class="chip chip-grey">Thermal-Mech</span>
+          <span class="chip chip-grey">Digital Twin</span>
+        </div>
+        <div class="scale-note">Continuum mechanics and coupled multiphysics. Digital twins validated against experiment.</div>
+        <div class="scale-arrow">→</div>
+      </div>
+      <div class="scale-col">
+        <div class="scale-num">04 / Robotics</div>
+        <div class="scale-name">Contact</div>
+        <div class="scale-range">mm – m</div>
+        <div class="scale-chips">
+          <span class="chip chip-primary">MuJoCo</span>
+          <span class="chip chip-grey">Isaac Sim</span>
+          <span class="chip chip-grey">ROS2</span>
+          <span class="chip chip-grey">PPO / RL</span>
+        </div>
+        <div class="scale-note">Rigid and compliant body dynamics. Sim-to-real gap diagnosis from physics first principles.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+      <div class="sec-bg" aria-hidden="true">
+    <svg style="top:12%;right:3%;width:90px;opacity:.22;" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><line x1="14" y1="14" x2="5" y2="5"/><line x1="14" y1="14" x2="23" y2="5"/><line x1="14" y1="14" x2="5" y2="23"/><line x1="14" y1="14" x2="23" y2="23"/><rect x="11" y="11" width="6" height="6" rx="1"/><circle cx="5" cy="5" r="3.2"/><circle cx="23" cy="5" r="3.2"/><circle cx="5" cy="23" r="3.2"/><circle cx="23" cy="23" r="3.2"/><line x1="2" y1="5" x2="8" y2="5"/><line x1="5" y1="2" x2="5" y2="8"/><line x1="20" y1="5" x2="26" y2="5"/><line x1="23" y1="2" x2="23" y2="8"/><line x1="2" y1="23" x2="8" y2="23"/><line x1="5" y1="20" x2="5" y2="26"/><line x1="20" y1="23" x2="26" y2="23"/><line x1="23" y1="20" x2="23" y2="26"/></svg><svg style="top:20%;left:3%;width:68px;opacity:.2;" viewBox="0 0 20 26" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><line x1="10" y1="0" x2="10" y2="5"/><rect x="7" y="5" width="6" height="4" rx="1"/><path d="M7 9 Q5 13 5 18 L7 23 L9 23 L8.5 18 Q8.5 13 9 9"/><path d="M13 9 Q15 13 15 18 L13 23 L11 23 L11.5 18 Q11.5 13 11 9"/></svg><svg style="bottom:8%;right:5%;width:125px;opacity:.2;" viewBox="0 0 36 30" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="18" cy="12" rx="9" ry="5"/><circle cx="27" cy="9" r="3"/><line x1="30" y1="8" x2="33" y2="7"/><line x1="24" y1="17" x2="25" y2="23"/><line x1="25" y1="23" x2="24" y2="28"/><circle cx="24" cy="17" r="1.2"/><circle cx="25" cy="23" r="1.1"/><line x1="20" y1="17" x2="21" y2="23"/><line x1="21" y1="23" x2="20" y2="28"/><circle cx="20" cy="17" r="1.2"/><circle cx="21" cy="23" r="1.1"/><line x1="14" y1="17" x2="12" y2="23"/><line x1="12" y1="23" x2="13" y2="28"/><circle cx="14" cy="17" r="1.2"/><circle cx="12" cy="23" r="1.1"/><line x1="10" y1="16" x2="8" y2="22"/><line x1="8" y1="22" x2="9" y2="28"/><circle cx="10" cy="16" r="1.2"/><circle cx="8" cy="22" r="1.1"/><path d="M9 10 Q5 8 4 5"/></svg>
+  </div>
+  <div class="container">
+    <div class="sec-eyebrow">// technical skills</div>
+    <h2 class="sec-title">Stack</h2>
+    <div class="skills-icon-grid">
+
+      <!-- Quantum -->
+      <div class="skill-col">
+        <div class="skill-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+            <circle cx="12" cy="12" r="2.2" fill="currentColor" opacity="0.15" stroke-width="1.2"/>
+            <ellipse cx="12" cy="12" rx="10" ry="3.8"/>
+            <ellipse cx="12" cy="12" rx="10" ry="3.8" transform="rotate(60 12 12)"/>
+            <ellipse cx="12" cy="12" rx="10" ry="3.8" transform="rotate(120 12 12)"/>
+          </svg>
+        </div>
+        <div class="skill-col-label">Quantum · DFT</div>
+        <div class="skill-chip-row">
+          <span class="skchip">VASP</span>
+          <span class="skchip">DFT / AIMD</span>
+          <span class="skchip">PBE · PAW</span>
+          <span class="skchip">vdW corrections</span>
+          <span class="skchip">Electronic structure</span>
+        </div>
+      </div>
+
+      <!-- Atomistic -->
+      <div class="skill-col">
+        <div class="skill-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+            <circle cx="12" cy="5"  r="1.6" fill="currentColor" opacity="0.2"/>
+            <circle cx="5"  cy="16" r="1.6" fill="currentColor" opacity="0.2"/>
+            <circle cx="19" cy="16" r="1.6" fill="currentColor" opacity="0.2"/>
+            <circle cx="12" cy="12" r="1.6" fill="currentColor" opacity="0.2"/>
+            <line x1="12" y1="6.6"  x2="12"  y2="10.4"/>
+            <line x1="6.3" y1="14.7" x2="10.6" y2="12.7"/>
+            <line x1="17.7" y1="14.7" x2="13.4" y2="12.7"/>
+            <line x1="6.3" y1="17" x2="10.4" y2="14.7"/>
+            <line x1="17.7" y1="17" x2="13.6" y2="14.7"/>
+          </svg>
+        </div>
+        <div class="skill-col-label">Atomistic · MD</div>
+        <div class="skill-chip-row">
+          <span class="skchip">LAMMPS</span>
+          <span class="skchip">HOOMD-blue</span>
+          <span class="skchip">DeePMD-kit</span>
+          <span class="skchip">ML potentials</span>
+          <span class="skchip">GPU-MD</span>
+        </div>
+      </div>
+
+      <!-- Continuum -->
+      <div class="skill-col">
+        <div class="skill-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12,2 21,20 3,20" opacity="0.9"/>
+            <line x1="12" y1="2"  x2="7.5"  y2="11"/>
+            <line x1="12" y1="2"  x2="16.5" y2="11"/>
+            <line x1="7.5" y1="11" x2="16.5" y2="11"/>
+            <line x1="7.5" y1="11" x2="3"    y2="20"/>
+            <line x1="16.5" y1="11" x2="21"  y2="20"/>
+            <line x1="7.5" y1="11" x2="12"   y2="20"/>
+            <line x1="16.5" y1="11" x2="12"  y2="20"/>
+          </svg>
+        </div>
+        <div class="skill-col-label">Continuum · FEA</div>
+        <div class="skill-chip-row">
+          <span class="skchip">COMSOL</span>
+          <span class="skchip">FSI</span>
+          <span class="skchip">Electrokinetics</span>
+          <span class="skchip">Thermal-Mech</span>
+          <span class="skchip">Digital Twin</span>
+        </div>
+      </div>
+
+      <!-- Robotics -->
+      <div class="skill-col">
+        <div class="skill-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+            <rect x="8" y="14" width="8" height="6" rx="1"/>
+            <line x1="12" y1="14" x2="12" y2="10"/>
+            <line x1="8" y1="10" x2="16" y2="10"/>
+            <line x1="8"  y1="10" x2="6"  y2="7"/>
+            <line x1="16" y1="10" x2="18" y2="7"/>
+            <circle cx="6"  cy="6"  r="1.5" fill="currentColor" opacity="0.2"/>
+            <circle cx="18" cy="6"  r="1.5" fill="currentColor" opacity="0.2"/>
+            <circle cx="12" cy="4"  r="1.5"/>
+            <line x1="12" y1="10" x2="12" y2="5.5"/>
+          </svg>
+        </div>
+        <div class="skill-col-label">Robotics Sim</div>
+        <div class="skill-chip-row">
+          <span class="skchip">MuJoCo</span>
+          <span class="skchip">Isaac Sim</span>
+          <span class="skchip">ROS2</span>
+          <span class="skchip">PPO / RL</span>
+          <span class="skchip">Stable-Baselines3</span>
+        </div>
+      </div>
+
+      <!-- Programming -->
+      <div class="skill-col">
+        <div class="skill-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 18 22 12 16 6"/>
+            <polyline points="8 6 2 12 8 18"/>
+            <line x1="12" y1="3" x2="11" y2="21" opacity="0.4"/>
+          </svg>
+        </div>
+        <div class="skill-col-label">Programming</div>
+        <div class="skill-chip-row">
+          <span class="skchip">C++ · MPI</span>
+          <span class="skchip">Python</span>
+          <span class="skchip">Custom solvers</span>
+          <span class="skchip">HPC pipelines</span>
+          <span class="skchip">3× NSF XSEDE</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS (compact) -->
+<section id="publications">
+      <div class="sec-bg" aria-hidden="true">
+    <svg style="top:10%;right:3%;width:70px;opacity:.22;" viewBox="0 0 24 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2.5"/><line x1="12" y1="6.5" x2="12" y2="17"/><line x1="5" y1="10" x2="19" y2="10"/><circle cx="5" cy="10" r="1.3"/><circle cx="19" cy="10" r="1.3"/><line x1="5" y1="10" x2="3" y2="18"/><circle cx="3" cy="18" r="1.1"/><line x1="19" y1="10" x2="21" y2="18"/><circle cx="21" cy="18" r="1.1"/><line x1="9" y1="17" x2="15" y2="17"/><circle cx="9" cy="17" r="1.2"/><circle cx="15" cy="17" r="1.2"/><line x1="9" y1="17" x2="7" y2="27"/><circle cx="7" cy="27" r="1.1"/><line x1="7" y1="27" x2="7" y2="35"/><line x1="15" y1="17" x2="17" y2="27"/><circle cx="17" cy="27" r="1.1"/><line x1="17" y1="27" x2="17" y2="35"/></svg><svg style="bottom:10%;left:4%;width:100px;opacity:.2;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="20" width="10" height="3" rx="1"/><circle cx="12" cy="20" r="2"/><line x1="12" y1="20" x2="7" y2="13"/><circle cx="7" cy="13" r="1.8"/><line x1="7" y1="13" x2="15" y2="7"/><circle cx="15" cy="7" r="1.8"/><line x1="15" y1="7" x2="20" y2="4"/><circle cx="20" cy="4" r="1.2"/><line x1="20" y1="4" x2="22" y2="2"/><line x1="20" y1="4" x2="22" y2="6"/></svg>
+  </div>
+  <div class="container">
+    <div class="sec-eyebrow">// research record</div>
+    <h2 class="sec-title" style="margin-bottom:0.4rem;">Publications</h2>
+    <p style="font-family:var(--mono); font-size:0.75rem; color:var(--meta); margin-bottom:1.75rem;">
+      17+ papers · H-index 14+ · <a href="https://scholar.google.com/citations?hl=en&user=eORIck8AAAAJ&view_op=list_works&sortby=pubdate" target="_blank" style="color:var(--accent); text-decoration:none;">Full list on Google Scholar ↗</a>
+    </p>
+    <div class="pub-compact-grid">
+
+      <div class="pub-compact-item">
+        <span class="pub-badge badge-nc">Nature Comms</span>
+        <div class="pub-compact-body">
+          <div class="pub-title"><a href="https://www.nature.com/articles/s41467-022-35690-8" target="_blank" style="color:var(--text);text-decoration:none;border-bottom:1px solid var(--border2);">Discovery of Two-Dimensional Binary Nanoparticle Superlattices Using Global Monte Carlo Optimization</a></div>
+          <div class="pub-journal-name">Nature Communications · 2022 · Featured Article</div>
+          <div class="pub-journal-name" style="color:var(--accent);margin-top:0.2rem;">C++ global optimizer — directly maps to motion planning over cost landscapes</div>
+        </div>
+      </div>
+
+      <div class="pub-compact-item">
+        <span class="pub-badge badge-npj">npj Comp Mat</span>
+        <div class="pub-compact-body">
+          <div class="pub-title"><a href="https://www.nature.com/articles/s41524-023-01166-6" target="_blank" style="color:var(--text);text-decoration:none;border-bottom:1px solid var(--border2);">Many-body Potential for Simulating the Self-Assembly of Polymer-Grafted Nanoparticles</a></div>
+          <div class="pub-journal-name">npj Computational Materials · 2023</div>
+          <div class="pub-journal-name" style="color:var(--accent);margin-top:0.2rem;">ML surrogate modeling for complex many-body dynamics</div>
+        </div>
+      </div>
+
+      <div class="pub-compact-item">
+        <span class="pub-badge badge-other">Adv. Intel. Sys.</span>
+        <div class="pub-compact-body">
+          <div class="pub-title"><a href="https://advanced.onlinelibrary.wiley.com/doi/full/10.1002/aisy.202100005" target="_blank" style="color:var(--text);text-decoration:none;border-bottom:1px solid var(--border2);">Microengineered Materials with Self-Healing Features for Soft Robotics</a></div>
+          <div class="pub-journal-name">Advanced Intelligent Systems · 2021</div>
+          <div class="pub-journal-name" style="color:var(--accent);margin-top:0.2rem;">Soft robotics FSI</div>
+        </div>
+      </div>
+
+      <div class="pub-compact-item">
+        <span class="pub-badge badge-other">Biomicrofluidics</span>
+        <div class="pub-compact-body">
+          <div class="pub-title"><a href="https://pubs.aip.org/aip/bmf/article-abstract/9/4/044102/134806/Simultaneous-diamagnetic-and-magnetic-particle?redirectedFrom=fulltext" target="_blank" style="color:var(--text);text-decoration:none;border-bottom:1px solid var(--border2);">Simultaneous Diamagnetic and Magnetic Particle Trapping in Ferrofluid Microflows via a Single Permanent Magnet</a></div>
+          <div class="pub-journal-name">Biomicrofluidics · 2015</div>
+          <div class="pub-journal-name" style="color:var(--accent);margin-top:0.2rem;">Coupled-physics COMSOL simulation validated experimentally</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<section id="contact">
+      <div class="sec-bg" aria-hidden="true">
+    <svg style="top:18%;left:4%;width:90px;opacity:.22;" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><line x1="14" y1="14" x2="5" y2="5"/><line x1="14" y1="14" x2="23" y2="5"/><line x1="14" y1="14" x2="5" y2="23"/><line x1="14" y1="14" x2="23" y2="23"/><rect x="11" y="11" width="6" height="6" rx="1"/><circle cx="5" cy="5" r="3.2"/><circle cx="23" cy="5" r="3.2"/><circle cx="5" cy="23" r="3.2"/><circle cx="23" cy="23" r="3.2"/><line x1="2" y1="5" x2="8" y2="5"/><line x1="5" y1="2" x2="5" y2="8"/><line x1="20" y1="5" x2="26" y2="5"/><line x1="23" y1="2" x2="23" y2="8"/><line x1="2" y1="23" x2="8" y2="23"/><line x1="5" y1="20" x2="5" y2="26"/><line x1="20" y1="23" x2="26" y2="23"/><line x1="23" y1="20" x2="23" y2="26"/></svg><svg style="top:22%;right:5%;width:80px;opacity:.2;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12 A7 7 0 1 1 12 19"/><polyline points="10,21 12,19 10,17"/><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="1.2" fill="currentColor" opacity=".4"/></svg>
+  </div>
+  <div class="container">
+    <div class="sec-eyebrow" style="justify-content:center; display:flex;">// get in touch</div>
+    <h2 class="sec-title" style="text-align:center;">Let's Build Together</h2>
+    <p style="color:var(--muted); max-width:480px; margin:0 auto 0.5rem; text-align:center; font-style:italic;">
+      Physics / Robotics Simulation Engineer · Robotics AI.<br>
+      Open to conversations about simulation pipelines, sim-to-real transfer, and autonomous systems.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:yilongz393@gmail.com" class="c-link">✉ Email</a>
+      <a href="https://www.linkedin.com/in/yilong-zhou" class="c-link" target="_blank">↗ LinkedIn</a>
+      <a href="https://github.com/yilong-sim" class="c-link" target="_blank">↗ GitHub</a>
+      <a href="https://scholar.google.com/citations?hl=en&user=eORIck8AAAAJ&view_op=list_works&sortby=pubdate" class="c-link" target="_blank">↗ Google Scholar</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-txt">© 2026 Yilong Zhou · Lawrence Berkeley National Laboratory</div>
+  <div class="footer-txt">Static HTML · GitHub Pages · yilong-sim.github.io</div>
+</footer>
+
+
+<script>
+/* ═══════════════════════════════════════════════
+   HERO ANIMATIONS — v17
+═══════════════════════════════════════════════ */
+
+/* ── Typewriter ─────────────────────────────── */
+(function () {
+  const el = document.getElementById('hero-eyebrow');
+  if (!el) return;
+  if (!el.classList.contains('hero-otw')) return; // OTW badge — skip typewriter
+  const full = el.textContent.trim();
+  el.textContent = '';
+  el.classList.add('tw-active');
+  let i = 0;
+  function tick() {
+    el.textContent = full.slice(0, ++i);
+    if (i < full.length) setTimeout(tick, 55);
+    else setTimeout(() => el.classList.remove('tw-active'), 2000);
+  }
+  setTimeout(tick, 500);
+})();
+
+/* ── Count-up stats ─────────────────────────── */
+(function () {
+  const DUR = 1400;
+  const ease = t => 1 - Math.pow(1 - t, 3);
+  function run() {
+    document.querySelectorAll('.stat-num[data-target]').forEach(el => {
+      const n = parseFloat(el.dataset.target);
+      const s = el.dataset.suffix || '';
+      const t0 = performance.now();
+      (function f(now) {
+        const p = Math.min((now - t0) / DUR, 1);
+        el.textContent = Math.round(n * ease(p)) + s;
+        if (p < 1) requestAnimationFrame(f);
+      })(t0);
+    });
+  }
+  const obs = new IntersectionObserver(e => {
+    if (e[0].isIntersecting) { run(); obs.disconnect(); }
+  }, { threshold: 0.25 });
+  const h = document.getElementById('hero');
+  if (h) obs.observe(h);
+})();
+
+/* ── CFD Flow-Field Particles + Robotics Overlay ── */
+(function () {
+  const canvas = document.getElementById('hero-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, pts;
+  let arm         = {};
+  let pathRobot   = { progress: 0, waypoints: [] };
+  let coordFrames = [];
+
+  const N     = 95;
+  const TRAIL = 32;
+  const SPEED = 0.82;
+
+  function field(x, y, t) {
+    return {
+      fx: Math.sin(y * 0.0082 + t * 0.20) * 1.15 + Math.cos(x * 0.0055 + t * 0.10) * 0.55,
+      fy: Math.cos(x * 0.0082 - t * 0.17) * 1.15 + Math.sin(y * 0.0052 + t * 0.13) * 0.55
+    };
+  }
+
+  /* Catmull-Rom spline scalar interpolation */
+  function cr(a, b, c, d, t) {
+    const t2 = t*t, t3 = t2*t;
+    return 0.5*((2*b)+(c-a)*t+(2*a-5*b+4*c-d)*t2+(-a+3*b-3*c+d)*t3);
+  }
+  function crPt(wps, i, frac, n) {
+    const p0=wps[(i-1+n)%n], p1=wps[i%n], p2=wps[(i+1)%n], p3=wps[(i+2)%n];
+    return { x: cr(p0.x,p1.x,p2.x,p3.x,frac), y: cr(p0.y,p1.y,p2.y,p3.y,frac) };
+  }
+
+  function init() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+    pts = Array.from({ length: N }, () => ({
+      x: Math.random() * W, y: Math.random() * H,
+      r: 1.1 + Math.random() * 0.9, trail: []
+    }));
+
+    /* Path-planning robot — upper-right, beside name/content */
+    pathRobot.waypoints = [
+      { x: W * 0.57, y: H * 0.20 },
+      { x: W * 0.68, y: H * 0.13 },
+      { x: W * 0.80, y: H * 0.21 },
+      { x: W * 0.82, y: H * 0.38 },
+      { x: W * 0.68, y: H * 0.46 },
+      { x: W * 0.56, y: H * 0.36 },
+    ];
+
+    /* Robot arm — lower-right */
+    arm = {
+      base:  { x: W * 0.66, y: H * 0.80 },
+      links: [88, 66, 46],
+    };
+
+    /* Coord frames — upper-left, bottom-center, right-mid */
+    coordFrames = [
+      { x: W * 0.07, y: H * 0.26 },
+      { x: W * 0.44, y: H * 0.90 },
+      { x: W * 0.91, y: H * 0.58 },
+    ];
+  }
+
+  /* ── Path-planning mini-robot ── */
+  function drawPathRobot() {
+    const wps = pathRobot.waypoints;
+    const n   = wps.length;
+    pathRobot.progress = (pathRobot.progress + 0.008) % n;
+
+    const i0   = Math.floor(pathRobot.progress);
+    const frac = pathRobot.progress - i0;
+    const pos  = crPt(wps, i0, frac,        n);
+    const pos2 = crPt(wps, i0, Math.min(frac + 0.025, 0.9999), n);
+    const angle = Math.atan2(pos2.y - pos.y, pos2.x - pos.x);
+    const curSeg = i0 % n;
+
+    ctx.save();
+
+    /* ── Spline path ── */
+    ctx.beginPath();
+    const STEPS = 200;
+    for (let s = 0; s <= STEPS; s++) {
+      const prog = (s / STEPS) * n;
+      const si   = Math.floor(prog) % n;
+      const sf   = prog - Math.floor(prog);
+      const pt   = crPt(wps, si, sf, n);
+      s === 0 ? ctx.moveTo(pt.x, pt.y) : ctx.lineTo(pt.x, pt.y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = 'rgba(168,94,10,0.11)';
+    ctx.lineWidth   = 1;
+    ctx.setLineDash([4, 7]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    /* ── Visited arc overlay (slightly brighter up to current pos) ── */
+    ctx.beginPath();
+    const visitFrac = pathRobot.progress / n;  /* 0–1 around loop */
+    const visitSteps = Math.round(visitFrac * STEPS);
+    for (let s = 0; s <= visitSteps; s++) {
+      const prog = (s / STEPS) * n;
+      const si   = Math.floor(prog) % n;
+      const sf   = prog - Math.floor(prog);
+      const pt   = crPt(wps, si, sf, n);
+      s === 0 ? ctx.moveTo(pt.x, pt.y) : ctx.lineTo(pt.x, pt.y);
+    }
+    ctx.strokeStyle = 'rgba(168,94,10,0.22)';
+    ctx.lineWidth   = 1.2;
+    ctx.setLineDash([]);
+    ctx.stroke();
+
+    /* ── Waypoint diamonds ── */
+    for (let k = 0; k < n; k++) {
+      const wp = wps[k];
+      const passed = k <= curSeg;
+      const s = 4.2;
+      ctx.save();
+      ctx.translate(wp.x, wp.y);
+      ctx.rotate(Math.PI / 4);
+      ctx.beginPath();
+      ctx.rect(-s/2, -s/2, s, s);
+      ctx.fillStyle   = passed ? 'rgba(168,94,10,0.24)' : 'rgba(168,94,10,0.07)';
+      ctx.strokeStyle = 'rgba(168,94,10,0.22)';
+      ctx.lineWidth   = 1;
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+      /* Label */
+      ctx.font      = '8px IBM Plex Mono, monospace';
+      ctx.fillStyle = 'rgba(168,94,10,0.17)';
+      ctx.fillText(`P${k+1}`, wp.x + 6.5, wp.y + 3);
+    }
+
+    /* ── Robot body (top-down differential drive) ── */
+    const BW = 22, BH = 13, TH = 3; /* body dims, track thickness */
+
+    ctx.save();
+    ctx.translate(pos.x, pos.y);
+    ctx.rotate(angle);
+
+    /* Ground shadow */
+    ctx.beginPath();
+    ctx.ellipse(1.5, 2, BW/2 + 3, BH/2 + TH + 2, 0, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(168,94,10,0.07)';
+    ctx.fill();
+
+    /* Tracks (top & bottom in top-down view) */
+    for (const s of [-1, 1]) {
+      const ty = s * (BH / 2 + TH / 2);
+      ctx.beginPath();
+      ctx.rect(-BW/2, ty - TH/2, BW, TH);
+      ctx.fillStyle   = 'rgba(168,94,10,0.20)';
+      ctx.strokeStyle = 'rgba(168,94,10,0.28)';
+      ctx.lineWidth   = 0.7;
+      ctx.fill();
+      ctx.stroke();
+      /* Track ridges */
+      ctx.strokeStyle = 'rgba(168,94,10,0.12)';
+      ctx.lineWidth   = 0.5;
+      for (let r = -BW/2 + 3; r < BW/2; r += 5) {
+        ctx.beginPath();
+        ctx.moveTo(r, ty - TH/2);
+        ctx.lineTo(r, ty + TH/2);
+        ctx.stroke();
+      }
+    }
+
+    /* Body */
+    ctx.beginPath();
+    ctx.rect(-BW/2, -BH/2, BW, BH);
+    ctx.fillStyle   = 'rgba(168,94,10,0.17)';
+    ctx.strokeStyle = 'rgba(168,94,10,0.30)';
+    ctx.lineWidth   = 1.3;
+    ctx.fill();
+    ctx.stroke();
+
+    /* Center divider line */
+    ctx.beginPath();
+    ctx.moveTo(-BW/2 + 3, 0);
+    ctx.lineTo( BW/2 - 5, 0);
+    ctx.strokeStyle = 'rgba(168,94,10,0.13)';
+    ctx.lineWidth   = 0.8;
+    ctx.stroke();
+
+    /* Front wedge (direction cue) */
+    ctx.beginPath();
+    ctx.moveTo(BW/2,     -BH/2);
+    ctx.lineTo(BW/2 + 5,  0);
+    ctx.lineTo(BW/2,      BH/2);
+    ctx.closePath();
+    ctx.fillStyle   = 'rgba(168,94,10,0.18)';
+    ctx.strokeStyle = 'rgba(168,94,10,0.25)';
+    ctx.lineWidth   = 1;
+    ctx.fill();
+    ctx.stroke();
+
+    /* Sensor dome (top-down: circle near front-center) */
+    ctx.beginPath();
+    ctx.arc(3, 0, 4, 0, Math.PI * 2);
+    ctx.fillStyle   = 'rgba(168,94,10,0.28)';
+    ctx.strokeStyle = 'rgba(168,94,10,0.38)';
+    ctx.lineWidth   = 1;
+    ctx.fill();
+    ctx.stroke();
+    /* Sensor inner dot */
+    ctx.beginPath();
+    ctx.arc(3, 0, 1.5, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(168,94,10,0.52)';
+    ctx.fill();
+
+    ctx.restore(); /* end robot transform */
+    ctx.restore(); /* end drawPathRobot save */
+  }
+
+  /* ── Robot arm (3-DOF FK) ── */
+  function drawArm(t) {
+    const q0 = -Math.PI * 0.52 + Math.sin(t * 0.26) * Math.PI * 0.20;
+    const q1 =  Math.PI * 0.28 + Math.sin(t * 0.33 + 1.1) * Math.PI * 0.22;
+    const q2 = -Math.PI * 0.14 + Math.sin(t * 0.41 + 2.3) * Math.PI * 0.18;
+    const cumAngles = [q0, q0+q1, q0+q1+q2];
+
+    const joints = [arm.base];
+    for (let i = 0; i < arm.links.length; i++) {
+      joints.push({
+        x: joints[i].x + Math.cos(cumAngles[i]) * arm.links[i],
+        y: joints[i].y + Math.sin(cumAngles[i]) * arm.links[i]
+      });
+    }
+
+    ctx.save();
+    ctx.lineCap = 'round';
+
+    for (let i = 0; i < joints.length - 1; i++) {
+      ctx.beginPath(); ctx.moveTo(joints[i].x,joints[i].y); ctx.lineTo(joints[i+1].x,joints[i+1].y);
+      ctx.strokeStyle = 'rgba(168,94,10,0.07)'; ctx.lineWidth = 4; ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(joints[i].x,joints[i].y); ctx.lineTo(joints[i+1].x,joints[i+1].y);
+      ctx.strokeStyle = 'rgba(168,94,10,0.18)'; ctx.lineWidth = 1.6; ctx.stroke();
+    }
+    for (let i = 0; i < joints.length; i++) {
+      const isBase=i===0, isEE=i===joints.length-1;
+      const r = isBase ? 6 : isEE ? 3 : 4.5;
+      ctx.beginPath(); ctx.arc(joints[i].x,joints[i].y,r+2.5,0,Math.PI*2);
+      ctx.strokeStyle='rgba(168,94,10,0.10)'; ctx.lineWidth=1; ctx.stroke();
+      ctx.beginPath(); ctx.arc(joints[i].x,joints[i].y,r,0,Math.PI*2);
+      ctx.fillStyle=isBase?'rgba(168,94,10,0.22)':'rgba(168,94,10,0.16)'; ctx.fill();
+      ctx.strokeStyle='rgba(168,94,10,0.28)'; ctx.lineWidth=1; ctx.stroke();
+    }
+
+    const ee = joints[joints.length-1], cs = 9;
+    ctx.strokeStyle='rgba(168,94,10,0.32)'; ctx.lineWidth=1;
+    ctx.beginPath();
+    ctx.moveTo(ee.x-cs,ee.y); ctx.lineTo(ee.x-4,ee.y);
+    ctx.moveTo(ee.x+4,ee.y);  ctx.lineTo(ee.x+cs,ee.y);
+    ctx.moveTo(ee.x,ee.y-cs); ctx.lineTo(ee.x,ee.y-4);
+    ctx.moveTo(ee.x,ee.y+4);  ctx.lineTo(ee.x,ee.y+cs);
+    ctx.stroke();
+    ctx.beginPath(); ctx.arc(ee.x,ee.y,5.5,0,Math.PI*2);
+    ctx.strokeStyle='rgba(168,94,10,0.25)'; ctx.stroke();
+
+    const wrist=joints[2];
+    ctx.beginPath(); ctx.arc(wrist.x,wrist.y,arm.links[2],-Math.PI,0);
+    ctx.strokeStyle='rgba(168,94,10,0.06)'; ctx.lineWidth=1;
+    ctx.setLineDash([3,5]); ctx.stroke(); ctx.setLineDash([]);
+
+    ctx.fillStyle='rgba(168,94,10,0.12)';
+    ctx.fillRect(arm.base.x-10, arm.base.y+5, 20, 5);
+    ctx.restore();
+  }
+
+  /* ── Coordinate frame markers ── */
+  function drawCoordFrames() {
+    const axLen=20, ahLen=5;
+    ctx.save(); ctx.lineWidth=1; ctx.lineCap='round';
+    for (const f of coordFrames) {
+      ctx.strokeStyle='rgba(168,94,10,0.20)'; ctx.fillStyle='rgba(168,94,10,0.20)';
+      ctx.beginPath(); ctx.moveTo(f.x,f.y); ctx.lineTo(f.x+axLen,f.y); ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(f.x+axLen,f.y); ctx.lineTo(f.x+axLen-ahLen,f.y-3); ctx.lineTo(f.x+axLen-ahLen,f.y+3);
+      ctx.closePath(); ctx.fill();
+      ctx.strokeStyle='rgba(168,94,10,0.14)'; ctx.fillStyle='rgba(168,94,10,0.14)';
+      ctx.beginPath(); ctx.moveTo(f.x,f.y); ctx.lineTo(f.x,f.y-axLen); ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(f.x,f.y-axLen); ctx.lineTo(f.x-3,f.y-axLen+ahLen); ctx.lineTo(f.x+3,f.y-axLen+ahLen);
+      ctx.closePath(); ctx.fill();
+      ctx.beginPath(); ctx.arc(f.x,f.y,2,0,Math.PI*2);
+      ctx.fillStyle='rgba(168,94,10,0.28)'; ctx.fill();
+      ctx.font='9px IBM Plex Mono, monospace';
+      ctx.fillStyle='rgba(168,94,10,0.22)'; ctx.fillText('x',f.x+axLen+3,f.y+4);
+      ctx.fillStyle='rgba(168,94,10,0.16)'; ctx.fillText('y',f.x+3,f.y-axLen-3);
+    }
+    ctx.restore();
+  }
+
+  let t = 0;
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+    t += 0.011;
+
+    drawCoordFrames();
+    drawArm(t);
+    drawPathRobot();
+
+    for (const p of pts) {
+      const { fx, fy } = field(p.x, p.y, t);
+      const mag = Math.sqrt(fx*fx + fy*fy) || 1;
+      p.x += fx/mag*SPEED; p.y += fy/mag*SPEED;
+      let tp = false;
+      if (p.x<0){p.x=W;tp=true;} else if(p.x>W){p.x=0;tp=true;}
+      if (p.y<0){p.y=H;tp=true;} else if(p.y>H){p.y=0;tp=true;}
+      if (tp) p.trail = [];
+      p.trail.push({ x: p.x, y: p.y });
+      if (p.trail.length > TRAIL) p.trail.shift();
+      if (p.trail.length > 1) {
+        for (let i = 1; i < p.trail.length; i++) {
+          const alpha = (i / p.trail.length) * 0.27;
+          ctx.beginPath();
+          ctx.moveTo(p.trail[i-1].x, p.trail[i-1].y);
+          ctx.lineTo(p.trail[i].x,   p.trail[i].y);
+          ctx.strokeStyle = `rgba(168,94,10,${alpha})`;
+          ctx.lineWidth = 1.1; ctx.lineCap = 'round';
+          ctx.stroke();
+        }
+      }
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(168,94,10,0.42)'; ctx.fill();
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  init();
+  window.addEventListener('resize', init);
+  frame();
+})();
+
+/* ── Scroll indicator ── */
+(function () {
+  const el  = document.getElementById('scroll-indicator');
+  const hero = document.getElementById('hero');
+  if (!el || !hero) return;
+  const obs = new IntersectionObserver(([e]) => {
+    el.classList.toggle('hidden', !e.isIntersecting);
+  }, { threshold: 0.15 });
+  obs.observe(hero);
+})();
+</script>
+
+</body>
+</html>
