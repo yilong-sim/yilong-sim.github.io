@@ -36,7 +36,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 300; display: flex; a
 .nav-links a:hover { color: #e8c980; }
 
 /* HERO */
-#hero { min-height: 100vh; display: flex; align-items: center; padding: 7rem 3rem 5rem; position: relative; overflow: hidden; }
+#hero { min-height: 100vh; display: flex; align-items: center; padding: 7rem 3rem 5rem; }
 .hero-inner { max-width: 1080px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 240px; gap: 4rem; align-items: center; }
 .hero-photo { width: 220px; height: 280px; border-radius: 4px; background: var(--bg3); border: 1px solid var(--border2); overflow: hidden; position: relative; justify-self: end; }
 .hero-photo img { width: 100%; height: 100%; object-fit: cover; }
@@ -758,7 +758,7 @@ body::before {
             <span>Add<br>mujoco-demo.mp4</span>
           </div>
         </div>
-        <div class="proj-content">
+        <div class="proj-content" style="padding-left:1.75rem;">
           <div class="proj-tags">
             <span class="tag tag-teal">MuJoCo</span>
             <span class="tag tag-teal">Robotics</span>
@@ -788,7 +788,7 @@ body::before {
             <span>Add<br>deepmd-demo.mp4</span>
           </div>
         </div>
-        <div class="proj-content">
+        <div class="proj-content" style="padding-left:1.75rem;">
           <div class="proj-tags">
             <span class="tag tag-grey">DeePMD</span>
             <span class="tag tag-teal">ML Potential</span>
@@ -819,7 +819,7 @@ body::before {
             <span>Add<br>comsol-fsi.mp4</span>
           </div>
         </div>
-        <div class="proj-content">
+        <div class="proj-content" style="padding-left:1.75rem;">
           <div class="proj-tags">
             <span class="tag tag-teal">COMSOL</span>
             <span class="tag tag-grey">FSI / Digital Twin</span>
@@ -848,7 +848,7 @@ body::before {
             <span>Add<br>bhmc-demo.mp4</span>
           </div>
         </div>
-        <div class="proj-content">
+        <div class="proj-content" style="padding-left:1.75rem;">
           <div class="proj-tags">
             <span class="tag tag-orange">C++</span>
             <span class="tag tag-teal">Monte Carlo</span>
@@ -873,28 +873,28 @@ body::before {
 
       <!-- PROJECT 5 -->
       <div class="proj-item">
-        <div class="proj-media">
-          <div class="proj-media-placeholder">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            <span>Add<br>ros2-turtlesim.mp4</span>
-          </div>
+        <div class="proj-media" style="display:flex; align-items:center; justify-content:center; background:#0a0f1a; overflow:hidden;">
+          <img src="https://raw.githubusercontent.com/yilong-sim/ros2-turtlesim-catch-them-all/main/media/demo.gif"
+               alt="ROS2 Turtlesim Demo"
+               style="width:100%; height:100%; object-fit:contain; display:block;">
         </div>
-        <div class="proj-content">
+        <div class="proj-content" style="padding-left:1.75rem;">
           <div class="proj-tags">
             <span class="tag tag-teal">ROS2</span>
-            <span class="tag tag-grey">Python</span>
-            <span class="tag tag-grey">Learning · In Progress</span>
+            <span class="tag tag-grey">C++</span>
+            <span class="tag tag-grey">Jazzy</span>
           </div>
-          <div class="proj-title">ROS2 Robotics Systems — Turtlesim & Beyond</div>
-          <div class="proj-desc">Systematic ROS2 skill-building: node architecture, pub/sub patterns, services/actions, and custom controller development.</div>
+          <div class="proj-title">ROS2 Turtlesim: Catch Them All (C++)</div>
+          <div class="proj-desc">Multi-node ROS2 system where a master turtle autonomously hunts and catches randomly spawned turtles using a proportional controller.</div>
           <ul class="proj-bullets">
-            <li>Completed ROS2 Humble fundamentals: nodes, topics, services, actions, parameters, launch files</li>
-            <li>Built custom turtlesim controllers (waypoint follower, proportional heading controller) in Python and C++</li>
-            <li>Planned extension: multi-robot coordination and integration with MuJoCo simulation backend via ROS2 bridge</li>
+            <li>3-node architecture: turtle_spawner, turtle_controller, turtlesim_node communicating via topics and services</li>
+            <li>P controller with angle wrapping for smooth pursuit; closest-target selection via runtime parameter</li>
+            <li>Custom interfaces: Turtle.msg, TurtleArray.msg, CatchTurtle.srv; fully async service calls</li>
+            <li>Planned extension: dynamic target tracking with moving turtles and predictive pursuit control</li>
           </ul>
-          <div class="proj-metric">↗ In Progress · Coursework foundations + planned multi-robot extensions</div>
+          <div class="proj-metric">↗ Coursework final project · C++ implementation · ROS2 Jazzy</div>
           <div class="proj-links">
-            <a href="#" class="proj-link">GitHub →</a>
+            <a href="https://github.com/yilong-sim/ros2-turtlesim-catch-them-all" class="proj-link" target="_blank">GitHub →</a>
           </div>
         </div>
       </div>
