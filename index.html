@@ -750,6 +750,7 @@ body::before {
     <div class="proj-list">
 
       <!-- PROJECT 1 -->
+      <!-- PROJECT 1: MuJoCo -->
       <div class="proj-item">
         <div class="proj-media">
           <!-- Add video: <video autoplay muted loop><source src="mujoco-demo.mp4"></video> -->
@@ -780,67 +781,35 @@ body::before {
         </div>
       </div>
 
-      <!-- PROJECT 2 -->
+      <!-- PROJECT 2: ROS2 -->
       <div class="proj-item">
-        <div class="proj-media">
-          <div class="proj-media-placeholder">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-            <span>Add<br>deepmd-demo.mp4</span>
-          </div>
+        <div class="proj-media" style="display:flex; align-items:center; justify-content:center; background:#0a0f1a; overflow:hidden;">
+          <img src="https://raw.githubusercontent.com/yilong-sim/ros2-turtlesim-catch-them-all/main/media/demo.gif"
+               alt="ROS2 Turtlesim Demo"
+               style="width:100%; height:100%; object-fit:contain; display:block;">
         </div>
         <div class="proj-content" style="padding-left:1.75rem;">
           <div class="proj-tags">
-            <span class="tag tag-grey">DeePMD</span>
-            <span class="tag tag-teal">ML Potential</span>
-            <span class="tag tag-orange">LAMMPS</span>
-            <span class="tag tag-grey">GPU</span>
+            <span class="tag tag-teal">ROS2</span>
+            <span class="tag tag-grey">C++</span>
+            <span class="tag tag-grey">Jazzy</span>
           </div>
-          <div class="proj-title">ML Interatomic Potential Pipeline for GPU-Accelerated MD</div>
-          <div class="proj-desc">End-to-end workflow from DFT data generation to neural network potential training and large-scale deployment on HPC.</div>
+          <div class="proj-title">ROS2 Turtlesim: Catch Them All (C++)</div>
+          <div class="proj-desc">Multi-node ROS2 system where a master turtle autonomously hunts and catches randomly spawned turtles using a proportional controller.</div>
           <ul class="proj-bullets">
-            <li>Generated DFT training data with VASP (PBE functional, PAW pseudopotentials); curated active learning loops to expand configurational coverage</li>
-            <li>Trained DeePMD-kit deep neural network potentials; validated energy/force errors against held-out DFT trajectories</li>
-            <li>Detected deployment failure via ensemble disagreement — trajectories with high force variance flagged bonding environments absent from training set (direct analogy to sim-to-real distribution shift)</li>
-            <li>Deployed via LAMMPS pair_style deepmd on LBNL Savio GPU nodes; 100× speedup over DFT with <5 meV/atom energy error</li>
+            <li>3-node architecture: turtle_spawner, turtle_controller, turtlesim_node communicating via topics and services</li>
+            <li>P controller with angle wrapping for smooth pursuit; closest-target selection via runtime parameter</li>
+            <li>Custom interfaces: Turtle.msg, TurtleArray.msg, CatchTurtle.srv; fully async service calls</li>
+            <li>Planned extension: dynamic target tracking with moving turtles and predictive pursuit control</li>
           </ul>
-          <div class="proj-metric">↗ Published in npj Computational Materials</div>
+          <div class="proj-metric">↗ Coursework final project · C++ implementation · ROS2 Jazzy</div>
           <div class="proj-links">
-            <a href="#" class="proj-link">Paper ↗</a>
-            <a href="#" class="proj-link">GitHub →</a>
+            <a href="https://github.com/yilong-sim/ros2-turtlesim-catch-them-all" class="proj-link" target="_blank">GitHub →</a>
           </div>
         </div>
       </div>
 
-      <!-- PROJECT 3 -->
-      <div class="proj-item">
-        <div class="proj-media">
-          <div class="proj-media-placeholder">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
-            <span>Add<br>comsol-fsi.mp4</span>
-          </div>
-        </div>
-        <div class="proj-content" style="padding-left:1.75rem;">
-          <div class="proj-tags">
-            <span class="tag tag-teal">COMSOL</span>
-            <span class="tag tag-grey">FSI / Digital Twin</span>
-            <span class="tag tag-grey">Soft Robotics</span>
-          </div>
-          <div class="proj-title">FSI Digital Twin for Soft Polymer Actuators</div>
-          <div class="proj-desc">Full fluid-structure interaction model of fluidic elastomer actuators, coupling large-deformation mechanics with internal pressure fluid flow.</div>
-          <ul class="proj-bullets">
-            <li>Built COMSOL Multiphysics FSI model coupling Solid Mechanics and Laminar Flow modules; hyperelastic Mooney-Rivlin material model for elastomer</li>
-            <li>Parametrized contact force, deformation profiles, and actuation bandwidth as a function of geometry and pressure input</li>
-            <li>Validated against physical actuator experiments; model predictions within 8% of measured tip displacement</li>
-            <li>Digital twin used to guide design iteration: geometry optimization reduced required actuation pressure by 23%</li>
-          </ul>
-          <div class="proj-metric">↗ Published · COMSOL Multiphysics from grad school through LBNL postdoc</div>
-          <div class="proj-links">
-            <a href="#" class="proj-link">Paper ↗</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- PROJECT 4 -->
+      <!-- PROJECT 3: Basin-Hopping -->
       <div class="proj-item">
         <div class="proj-media">
           <div class="proj-media-placeholder">
@@ -871,30 +840,62 @@ body::before {
         </div>
       </div>
 
-      <!-- PROJECT 5 -->
+      <!-- PROJECT 4: FSI -->
       <div class="proj-item">
-        <div class="proj-media" style="display:flex; align-items:center; justify-content:center; background:#0a0f1a; overflow:hidden;">
-          <img src="https://raw.githubusercontent.com/yilong-sim/ros2-turtlesim-catch-them-all/main/media/demo.gif"
-               alt="ROS2 Turtlesim Demo"
-               style="width:100%; height:100%; object-fit:contain; display:block;">
+        <div class="proj-media">
+          <div class="proj-media-placeholder">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+            <span>Add<br>comsol-fsi.mp4</span>
+          </div>
         </div>
         <div class="proj-content" style="padding-left:1.75rem;">
           <div class="proj-tags">
-            <span class="tag tag-teal">ROS2</span>
-            <span class="tag tag-grey">C++</span>
-            <span class="tag tag-grey">Jazzy</span>
+            <span class="tag tag-teal">COMSOL</span>
+            <span class="tag tag-grey">FSI / Digital Twin</span>
+            <span class="tag tag-grey">Soft Robotics</span>
           </div>
-          <div class="proj-title">ROS2 Turtlesim: Catch Them All (C++)</div>
-          <div class="proj-desc">Multi-node ROS2 system where a master turtle autonomously hunts and catches randomly spawned turtles using a proportional controller.</div>
+          <div class="proj-title">FSI Digital Twin for Soft Polymer Actuators</div>
+          <div class="proj-desc">Full fluid-structure interaction model of fluidic elastomer actuators, coupling large-deformation mechanics with internal pressure fluid flow.</div>
           <ul class="proj-bullets">
-            <li>3-node architecture: turtle_spawner, turtle_controller, turtlesim_node communicating via topics and services</li>
-            <li>P controller with angle wrapping for smooth pursuit; closest-target selection via runtime parameter</li>
-            <li>Custom interfaces: Turtle.msg, TurtleArray.msg, CatchTurtle.srv; fully async service calls</li>
-            <li>Planned extension: dynamic target tracking with moving turtles and predictive pursuit control</li>
+            <li>Built COMSOL Multiphysics FSI model coupling Solid Mechanics and Laminar Flow modules; hyperelastic Mooney-Rivlin material model for elastomer</li>
+            <li>Parametrized contact force, deformation profiles, and actuation bandwidth as a function of geometry and pressure input</li>
+            <li>Validated against physical actuator experiments; model predictions within 8% of measured tip displacement</li>
+            <li>Digital twin used to guide design iteration: geometry optimization reduced required actuation pressure by 23%</li>
           </ul>
-          <div class="proj-metric">↗ Coursework final project · C++ implementation · ROS2 Jazzy</div>
+          <div class="proj-metric">↗ Published · COMSOL Multiphysics from grad school through LBNL postdoc</div>
           <div class="proj-links">
-            <a href="https://github.com/yilong-sim/ros2-turtlesim-catch-them-all" class="proj-link" target="_blank">GitHub →</a>
+            <a href="#" class="proj-link">Paper ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 5: ML Potential -->
+      <div class="proj-item">
+        <div class="proj-media">
+          <div class="proj-media-placeholder">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            <span>Add<br>deepmd-demo.mp4</span>
+          </div>
+        </div>
+        <div class="proj-content" style="padding-left:1.75rem;">
+          <div class="proj-tags">
+            <span class="tag tag-grey">DeePMD</span>
+            <span class="tag tag-teal">ML Potential</span>
+            <span class="tag tag-orange">LAMMPS</span>
+            <span class="tag tag-grey">GPU</span>
+          </div>
+          <div class="proj-title">ML Interatomic Potential Pipeline for GPU-Accelerated MD</div>
+          <div class="proj-desc">End-to-end workflow from DFT data generation to neural network potential training and large-scale deployment on HPC.</div>
+          <ul class="proj-bullets">
+            <li>Generated DFT training data with VASP (PBE functional, PAW pseudopotentials); curated active learning loops to expand configurational coverage</li>
+            <li>Trained DeePMD-kit deep neural network potentials; validated energy/force errors against held-out DFT trajectories</li>
+            <li>Detected deployment failure via ensemble disagreement — trajectories with high force variance flagged bonding environments absent from training set (direct analogy to sim-to-real distribution shift)</li>
+            <li>Deployed via LAMMPS pair_style deepmd on LBNL Savio GPU nodes; 100× speedup over DFT with <5 meV/atom energy error</li>
+          </ul>
+          <div class="proj-metric">↗ Published in npj Computational Materials</div>
+          <div class="proj-links">
+            <a href="#" class="proj-link">Paper ↗</a>
+            <a href="#" class="proj-link">GitHub →</a>
           </div>
         </div>
       </div>
