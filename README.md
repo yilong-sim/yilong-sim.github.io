@@ -17,4 +17,4 @@ Postdoctoral Scholar @ Lawrence Berkeley National Laboratory (LBNL)
 ## Current Focus
 Transitioning multi-scale physics simulation expertise into robotics —  
 contact-rich dynamics in MuJoCo, RL-based control (PPO), and ROS2.  
-17+ publications · H-index 14+ · Nature Communications · npj Computational Materials
+17+ publications · H-index 14+ · Nature Communications · npj Computational Materials · Advanced Intelligent Systems
