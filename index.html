@@ -812,31 +812,30 @@ body::before {
 
       <!-- PROJECT 3: Basin-Hopping -->
       <div class="proj-item">
-        <div class="proj-media">
-          <div class="proj-media-placeholder">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-            <span>Add<br>bhmc-demo.mp4</span>
-          </div>
+        <div class="proj-media" style="display:flex; align-items:center; justify-content:center; background:#0a0f1a; overflow:hidden;">
+          <img src="https://raw.githubusercontent.com/yilong-sim/basin-hopping-global-optimizer/main/media/demo.gif"
+               alt="BHMC Optimizer Demo"
+               style="width:100%; height:100%; object-fit:contain; display:block;">
         </div>
         <div class="proj-content" style="padding-left:1.75rem;">
           <div class="proj-tags">
             <span class="tag tag-orange">C++</span>
-            <span class="tag tag-teal">Monte Carlo</span>
-            <span class="tag tag-grey">VASP</span>
+            <span class="tag tag-teal">Global Optimization</span>
+            <span class="tag tag-grey">Monte Carlo</span>
             <span class="tag tag-grey">HPC</span>
           </div>
-          <div class="proj-title">Basin-Hopping Monte Carlo Global Structure Optimizer</div>
-          <div class="proj-desc">Custom C++ implementation of parallel BHMC for global energy minimization, integrated with VASP for ab initio energy evaluation.</div>
+          <div class="proj-title">Basin-Hopping Global Optimizer</div>
+          <div class="proj-desc">Custom C++ global optimizer using Basin-Hopping Monte Carlo for ground-state structure discovery — published in Nature Communications (2022, Featured Article).</div>
           <ul class="proj-bullets">
-            <li>Implemented BHMC from scratch in C++ with MPI parallelization; basin escape via random displacement + local gradient descent</li>
-            <li>Integrated with VASP via file I/O: C++ driver spawns VASP calculations, parses OUTCAR, updates configurations</li>
-            <li>Applied to discover lowest-energy polymer assembly configurations not accessible via steered MD or random search</li>
-            <li>Algorithm design maps directly to robot motion planning: global optimizer over energy landscape ≈ sampling-based planner over cost landscape</li>
+            <li>Implemented BHMC from scratch in C++ — 6 custom MC moves designed for quasi-2D interfacial geometries; conjugate gradient local minimization with Wolfe line search</li>
+            <li>Ultrafast shape recognition (USR) for duplicate detection; periodic restart from global best — prevents stagnation in deep local minima</li>
+            <li>Discovered novel A3B5- and A4B6-type 2D superlattices never previously reported; predictions validated against experiment</li>
+            <li>Algorithm maps directly to robotics: energy landscape → cost landscape; basin escape → local minima avoidance in motion planning</li>
           </ul>
-          <div class="proj-metric">↗ Published in ACS Nano · Open-source C++</div>
+          <div class="proj-metric">↗ Nature Communications 2022 · Featured Article · Open-source C++</div>
           <div class="proj-links">
-            <a href="#" class="proj-link">Paper ↗</a>
-            <a href="#" class="proj-link">GitHub →</a>
+            <a href="https://www.nature.com/articles/s41467-022-35690-8" class="proj-link" target="_blank">Paper ↗</a>
+            <a href="https://github.com/yilong-sim/basin-hopping-global-optimizer" class="proj-link" target="_blank">GitHub →</a>
           </div>
         </div>
       </div>
